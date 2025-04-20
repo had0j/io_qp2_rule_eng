@@ -1,3 +1,9 @@
+/*
+Source code is from 2025.01.19 version, estimated to be the js after ts edited so it's definitely confusing, the code below is reference code modified from the source
+Deleted some unnecessary content, added various descriptions
+“MOD_” is a simplification for reading convenience, in the original code it's “this.S.setoptions.zenith_”,
+or “"xxxxxx_reversed" === this.S.setoptions.zenith_mods[0]”
+
 Some variable names for reference:
 
 1. `level` rank
@@ -12,13 +18,7 @@ Some variable names for reference:
 1. `Garbage Favor` garbagefavor
 1. `Garbage gathering` messiness_center
 1. `garbage waiting time` garbagephase
-
-```js
-    /*
-        Source code is from 2025.01.19 version, estimated to be the js after ts edited so it's definitely confusing, the code below is reference code modified from the source
-        Deleted some unnecessary content, added various descriptions
-        “MOD_” is a simplification for reading convenience, in the original code it's “this.S.setoptions.zenith_”,
-        or “"xxxxxx_reversed" === this.S.setoptions.zenith_mods[0]”
+*/
 
     // Some common tables
     FloorDistance = [0, 50, 150, 300, 450, 650, 850, 1100, 1350, 1650, 1 / 0];
