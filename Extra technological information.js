@@ -205,7 +205,7 @@ Some variable names for reference:
                     }
                 }
 
-                // For every column, first find the lowest empty tile, track this column's “dig hardness”
+                // For every column, first find the lowest empty tile, track this column's “dig easiness”
                 e: for (let x = 0; x < field.width; x++) {
                     for (let y = 0; y < field.height; y++) {
                         if (null !== t.board[y][x]) {
@@ -217,10 +217,10 @@ Some variable names for reference:
                     scores.push([x, .1 * t.rngex.nextFloat()]);
                 }
 
-                // Rank every column based off the dig hardness from high to low
+                // Rank every column based off the dig easiness from high to low
                 scores.sort((e, t) => t[1] - e[1]);
 
-                // Calculate every column's weight based off favor amount, which means decide whether to incline towards high or low dig hardness
+                // Calculate every column's weight based off favor amount, which means decide whether to incline towards high or low dig easiness
                 // favor为0时每一列的权重都是10，也就是等概率，图像画出来是一条直线（虽然0的时候其实会跳过这些步骤，不用这么麻烦），正数的时候就会把这条直线绕中点(4.5，10)顺时针旋转，也就是增加前五项好挖的列的权重，减少后五项不好挖的列的权重（负权重计为0）
                 // ((translation work in progress))
                 let scoreSum = 0;
