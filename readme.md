@@ -329,11 +329,11 @@ When activating 【Volatile Garbage+】, this value is locked to 50 for the enti
 > The easiest is 【Volatile Garbage+】's 50
 
 Specific garbage hole position choosing process:
-1. Calculate every columns' `dig easiness`
-    1. If the column is one of the highest ones and doesn't have empty spaces, the `dig easiness` is 0
+1. Calculate every columns' `dig difficulty score`
+    1. If the column is one of the highest ones and doesn't have empty spaces, the `dig difficulty score` is 0
     1. Find the column's lowest empty space, find the height of the board's highest spot
-    1. `dig easiness = height difference between empty space and highest spot + 5*empty space to highest garbage hole's horizontal distance`
-1. Rank the ten columns according to their `dig easiness`, put the highest in the front (randomly sort for same values)
+    1. `dig difficulty score = height difference between empty space and highest spot + 5*empty space to highest garbage hole's horizontal distance`
+1. Rank the ten columns according to their `dig difficulty score`, put the lowest which is the easiest to dig in the front (randomly sort for same values) (used to put highest in front)
 1. Use `Garbage Favor` to calculate probability spread, formula is `weight[i] = 10 + favor * (1 - i / 4.5)`, consider negative values 0
     1. You can observe the graph in this [Desmos document](https://www.desmos.com/calculator/yfzabziltb)
     1. The X axis is the column numbers (left side column 0 is the easiest to dig, right side column 9 is the hardest to dig), the Y axis is the weight, use the slider at the left side to tune the favor value
