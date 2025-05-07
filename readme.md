@@ -42,7 +42,7 @@ At Climb Speed 1 the multiplier is ×0.25, every level increase adds another ×0
 | `Crossing floors` | 3m | | The judgement condition is when current altitude (including unreleased temporary altitude) ***triggers*** one of sending/cancelling/clearing while less than 2m away from the next floor |
 
 > Altitude gain above excluding `crossing floors` are all affected by your `level`, for example at the start `level` is 1, multiplier is ×0.25, every 4 seconds gain 1m  
-> `Cancel penalty` (see later on for calculation formula details) will decrease received experience from cancelling. Once `cancel penalty` surpasses `consecutive cancels minus experience threshold`, for every extra point the 50% in the formula will decrease by 0.5%, to a lowest of 5%. This threshold is 40 when activating【Volatile Garbage(+)】, otherwise when【All-Spin(+)】is activated it's 10, otherwise it's 25.
+> `Cancel penalty` (see later on for calculation formula details) will decrease received experience from cancelling. Once `cancel penalty` surpasses `consecutive cancelss minus experience threshold`, for every extra point the 50% in the formula will decrease by 0.5%, to a lowest of 5%. This threshold is 40 when activating【Volatile Garbage(+)】, otherwise when【All-Spin(+)】is activated it's 10, otherwise it's 25.
 
 When gaining altitude, the newly increased altitude will first be stored into a temporary variable, every frame release 10%, at maximum 10m 
 
@@ -125,7 +125,7 @@ Reaching floor 10 with HYPERSPEED awards a hidden achievement, or when you fall 
 
 Hyperspeed is disabled when any mod is activated
 
-## Attack Target
+## Attack target
 
 You can't manually target someone in this mode, but the state of the player will impact the probability of yourself being attacked: `Targeting Factor`  
 The higher this value the likelier it is to be attacked, **with a starting value of 3**.
@@ -151,7 +151,7 @@ The `Targeting Grace` value (linear) will decrease garbage messiness, when fully
 
 If `Targeting Grace` has a value, every set amount of time (depending on floor, see table below) 0.25 `Targeting Grace` value is moved back to `Targeting Factor`, meaning the higher the floor, the more the system allows others to attack with garbage lines rapidly.
 
-### Gradual time increase (Caps at doubled past 7 minutes)
+### Gradual time increase (caps at doubled past 7 minutes)
 
 When time hits 3/5/7 minutes, `Targeting Factor` +1
 
@@ -201,29 +201,38 @@ If【Volatile Garbage】is activated, values above related to attack are all mul
 
 ## Others related to attack
 
-### Consecutive cancel
+### consecutive cancelss
 
-There is a `consecutive cancel` variable, the amount of garbage lines cancelled the amount is added  
-All Clears add **+5**
-Every 30 seconds without tanking garbage lines **+5**, timer then resets to zero  
-When clearing grey tiles (garbage lines) instantly **becomes 0**  
-When garbage in queue releases as garbage lines, every line entered through the bottom of the board -3 (lowest is 0)  
-When an I-Spin clears lines **-2**
-When clearing a Quad **-3**, track the column, if different from both of the previous two times (doesn't repeat tracking, only keep new ones ((translation note: I have no idea what the text inside the parentheses mean, sorry if it's unclear))) then another **-4**  
-SZ/JL piece spins clearing lines is the same as I piece clearing Quads, just changed to rotation center column, when both different **-2** (SZ and JL each use the same table)
+**The addition of this system can basically be attributed to the appearance of [Mechanical Hearts](https://bilibili.com/opus/997806608970940469) to prevent brainless high-speed looping, since as long as all garbage is cancelled clearing large amounts of items((?)) is possible**
 
-Once `consecutive cancel` reaches certain values, the original 7-bag order becomes modified, adding extra pieces to every bag:
+1. There is a `consecutive cancelss` variable, cancelling N garbage lines adds **+N**  
+1. All Clears add **+5**  
+1.【Directed at Mechanical Hearts】Track whether an S or Z is used when clearing an S/Z Spin, if the tetromino used is the same six times in a row then **+2**  
+1.【Directed at Mechanical Hearts】If the I piece is placed vertically at the two edge columns without clearing lines, then check if the four neighbouring blocks on the other column of the same board side, if they're all the I piece's cyan blocks then **+2**  
+1. When clearing grey tiles (garbage lines) instantly **becomes 0**  
+1. When garbage in queue releases as garbage lines, every line entered through the bottom of the board -3  
+1. When an I-Spin clears lines **-2**  
+1. When clearing a Quad **-3**, track the column, if different from both of the previous two times (doesn't repeat tracking, only keep new ones) then another **-4**  
+1. S/Z Spins clearing lines function identically to when an I piece clears a Quad, just with the rotation center column instead. When all different **-2**  
+1. J/L Spins clearing lines function identically to when an I piece clears a Quad, just with the rotation center column instead. When all different **-2**  
+1. Every 30 seconds without doing actions that decrease `consecutive cancelss`: **+5**  
+1. Every 75 pieces without doing actions that decreasse `consecutive cancelss`: **+5**  
+
+> Note 1: This value cannot fall under 0
+> Note 2: sigh even special weapons toward Mechanical Hearts are being used now, you can announce that Mechanical Hearts is victorious, Garbo what are you doing Garbo (
+> Note 3: All conditions above have already been overcome by Mechanical Heart's expansion version, despite requiring learning more changes
+
+Once `consecutive cancelss` reaches certain values, the original 7-bag order becomes modified, adding extra pieces to every bag:
 
  - 20: O piece
  - 30: random of L/J
- - 40: random of S/Z
+ - 40: random of S/Z, when reached for the first time an I5 is added (5-block long bar, limited to once per game)
  - 50: random of L/J
  - 50: random of T/I
  - 60: random of S/Z
 
-Will also shorten received garbage amount ((translation note: not sure what this means)), see `received amount calculation` chapter for detail
-
-> This system's addition can basically be attributed to the [Mechanical Hearts](https://bilibili.com/opus/997806608970940469) strategy
+Will also shorten garbage wait time, see `garbage wait time` chapter for detail  
+Will also increase received garbage amount, see `received amount calculation` chapter for detail
 
 ### Targeting Grace
 
@@ -265,7 +274,7 @@ Default 0.001
 With【All-Spin】without【Volatile Garbage】: 0.0003  
 With【Volatile Garbage】without【All-Spin】: 0.002
 
-Attacks add `penalty coefficicent * consecutive cancels ^ 2`, although increase amount won't surpass:
+Attacks add `penalty coefficicent * consecutive cancelss ^ 2`, although increase amount won't surpass:
 
 - Basic upper limit: Check floor count, first 7 floors is **floor+3**, unlimited after eighth floor  
 - If currently in windup: choose lower value compared to 6  
@@ -345,7 +354,7 @@ There is a `garbage gathering` toggle, enabled when `garbage messiness` <=15% an
  
 When enabled, garbage hole positions will never be on the two leftmost or rightmost columns, which means it's always on columns 3~8
 
-## Garbage waiting time
+## Garbage wait time
 
 When attacked garbage lines will wait in queue for a certain amount of time before entering a triggerable state, during this state placing pieces that don't clear lines causes garbage to enter through the board: transparent yellow → transparent red → opaque red (triggerable)  
 Waiting time is decided by the floor or certain mods, for specific values see below:
@@ -364,6 +373,10 @@ Waiting time is decided by the floor or certain mods, for specific values see be
 | 10  |  0.5s  (30f)  | 0.4s  (24f) |   **2.5s**    | `0.5s` |
 
 > Note: Because garbage has to switch twice to enter a triggerable state, the statistics in the source code are half of the table above
+
+### Cancelling penalty (didn't see that coming right, here too)
+
+When 'consecutive cancels' is over 25, received garbage' countdown time will be halved
 
 ## Fatigue
 
