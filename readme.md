@@ -226,7 +226,7 @@ Once `consecutive cancels` reaches certain values, the original 7-bag order beco
 
  - 20: O piece
  - 30: random of L/J
- - 40: random of S/Z, when reached for the first time an I5 is added (5-block long bar, limited to once per game)
+ - 40: random of S/Z, when reached for the first time an I5 is added (5-block long bar, limited to once per game) ((translation note: Pentas using I5 are downgraded to Quad))
  - 50: random of L/J
  - 50: random of T/I
  - 60: random of S/Z
