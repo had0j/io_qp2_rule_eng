@@ -792,7 +792,7 @@ Exclusive to 2025 Valentine's Day event, free to play for everyone for a week (i
 | Upright name | Effect summary | Reversed name | Effect summary (includes upright effects) |
 | ---: | :---: | ---: | :---: |
 | The Emperor | less room for error + harder to climb | The Tyrant | extremely hard to climb + descent + super fatigue |
-| Temperance | no holding | Asceticism | 1 preview + random + 2 holes |
+| Temperance | no holding | Asceticism | 1 preview + random + 2-wide holes |
 | Wheel of Fortune | messier garbage | Loaded Dice | 1.15s line clear delay + pattern start |
 | The Tower | higher gravity + decreased lock delay | Freefall | 20G low lock delay |
 | Strength | double garbage + double cancel | Last Stand | 3x garbage + normal cancel + low board |
