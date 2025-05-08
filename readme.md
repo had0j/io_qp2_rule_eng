@@ -42,7 +42,7 @@ At Climb Speed 1 the multiplier is ×0.25, every level increase adds another ×0
 | `Crossing floors` | 3m | | The judgement condition is when current altitude (including unreleased temporary altitude) ***triggers*** one of sending/cancelling/clearing while less than 2m away from the next floor |
 
 > Altitude gain above excluding `crossing floors` are all affected by your `level`, for example at the start `level` is 1, multiplier is ×0.25, every 4 seconds gain 1m  
-> `Cancel penalty` (see later on for calculation formula details) will decrease received experience from cancelling. Once `cancel penalty` surpasses `consecutive cancels minus experience threshold`, for every extra point the 50% in the formula will decrease by 0.5%, to a lowest of 5%. This threshold is 40 when activating【Volatile Garbage(+)】, otherwise when【All-Spin(+)】is activated it's 10, otherwise it's 25.
+> `Cancel penalty` (see later on for calculation formula details) will decrease received experience from cancelling. Once `cancel penalty` surpasses `cancel streak minus experience threshold`, for every extra point the 50% in the formula will decrease by 0.5%, to a lowest of 5%. This threshold is 40 when activating【Volatile Garbage(+)】, otherwise when【All-Spin(+)】is activated it's 10, otherwise it's 25.
 
 When gaining altitude, the newly increased altitude will first be stored into a temporary variable, every frame release 10%, at maximum 10m 
 
@@ -201,11 +201,11 @@ If【Volatile Garbage】is activated, values above related to attack are all mul
 
 ## Others related to attack
 
-### consecutive cancels
+### Cancel streak
 
 **The addition of this system can basically be attributed to the appearance of [Mechanical Hearts](https://bilibili.com/opus/997806608970940469) to prevent brainless high-speed looping, since as long as all garbage is cancelled clearing large amounts of items((?)) is possible**
 
-1. There is a `consecutive cancels` variable, cancelling N garbage lines adds **+N**  
+1. There is a `cancel streak` variable, cancelling N garbage lines adds **+N**  
 1. All Clears add **+5**  
 1.【Directed at Mechanical Hearts】Track whether an S or Z is used when clearing an S/Z Spin, if the tetromino used is the same six times in a row then **+2**  
 1.【Directed at Mechanical Hearts】If the I piece is placed vertically at the two edge columns without clearing lines, then check if the four neighbouring blocks on the other column of the same board side, if they're all the I piece's cyan blocks then **+2**  
@@ -215,14 +215,14 @@ If【Volatile Garbage】is activated, values above related to attack are all mul
 1. When clearing a Quad **-3**, track the column, if different from both of the previous two times (doesn't repeat tracking, only keep new ones) then another **-4**  
 1. S/Z Spins clearing lines function identically to when an I piece clears a Quad, just with the rotation center column instead. When all different **-2**  
 1. J/L Spins clearing lines function identically to when an I piece clears a Quad, just with the rotation center column instead. When all different **-2**  
-1. Every 30 seconds without doing actions that decrease `consecutive cancels`: **+5**  
-1. Every 75 pieces without doing actions that decreasse `consecutive cancels`: **+5**  
+1. Every 30 seconds without doing actions that decrease `cancel streak`: **+5**  
+1. Every 75 pieces without doing actions that decreasse `cancel streak`: **+5**  
 
 > Note 1: This value cannot fall under 0
 > Note 2: sigh even special weapons toward Mechanical Hearts are being used now, you can announce that Mechanical Hearts is victorious, Garbo what are you doing Garbo (
 > Note 3: All conditions above have already been overcome by Mechanical Heart's expansion version, despite requiring learning more changes
 
-Once `consecutive cancels` reaches certain values, the original 7-bag order becomes modified, adding extra pieces to every bag:
+Once `cancel streak` reaches certain values, the original 7-bag order becomes modified, adding extra pieces to every bag:
 
  - 20: O piece
  - 30: random of L/J
@@ -274,15 +274,15 @@ Default 0.001
 With【All-Spin】without【Volatile Garbage】: 0.0003  
 With【Volatile Garbage】without【All-Spin】: 0.002
 
-Attacks add `penalty coefficicent * consecutive cancels ^ 2`, although increase amount won't surpass:
+Attacks add `penalty coefficient * cancel streak ^ 2`, although increase amount won't surpass:
 
 - Basic upper limit: Check floor count, first 7 floors is **floor+3**, unlimited after eighth floor  
 - If currently in windup: choose lower value compared to 6  
 - If【Volatile】is enabled multiply by 2
 
-Multiply received attack by `100% + base multiplier*cancel penalty^2`
+Multiply received attack by `100% + base multiplier*cancel streak^2`
 
-If `cancel penalty` hits 25 and【Volatile Garbage】isn't activated, this attack countdown/2 ((translation note: not sure what this means))
+If `cancel streak` hits 25 and【Volatile Garbage】isn't activated, this attack countdown/2 ((translation note: this means garbage phase time is halved))
 
 #### 4. Carrying protection
 
@@ -376,7 +376,7 @@ Waiting time is decided by the floor or certain mods, for specific values see be
 
 ### Cancelling penalty (didn't see that coming right, here too)
 
-When 'consecutive cancels' is over 25, received garbage' countdown time will be halved
+When 'cancel streak' is over 25, received garbage' countdown time will be halved
 
 ## Fatigue
 
