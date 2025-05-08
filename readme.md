@@ -267,7 +267,7 @@ If altitude is greater than `critical altitude`, multiply received attack by `10
 
 If【Duo(+)】is activated and the partner is dead, multiply received attack by `150%`
 
-#### 3. Cancel penalty (looping penalty)
+#### 3. Cancel penalty (pattern penalty)
 
 First fetch `penalty coefficient`  
 Default 0.001  
