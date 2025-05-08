@@ -271,8 +271,8 @@ If【Duo(+)】is activated and the partner is dead, multiply received attack by 
 
 First fetch `penalty coefficient`  
 Default 0.001  
-With【All-Spin】without【Volatile Garbage】: 0.0003  
-With【Volatile Garbage】without【All-Spin】: 0.002
+With【Volatile Garbage】without【All-Spin】: 0.0003  
+With【All-Spin】without【Volatile Garbage】: 0.002
 
 Attacks add `penalty coefficient * cancel streak ^ 2`, although increase amount won't surpass:
 
