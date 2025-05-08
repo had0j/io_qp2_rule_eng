@@ -280,8 +280,6 @@ Attacks add `penalty coefficient * cancel streak ^ 2`, although increase amount 
 - If currently in windup: choose lower value compared to 6  
 - If【Volatile】is enabled multiply by 2
 
-If `cancel streak` hits 25 and【Volatile Garbage】isn't activated, this attack countdown/2 ((translation note: this means garbage phase time is halved))
-
 #### 4. Carrying protection
 
 If【Duo(+)】is activated and bonus altitude contribution percentage through sending/KOs is less than 20%, multiply received attack by `55%+contribution%`
