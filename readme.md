@@ -793,13 +793,13 @@ Exclusive to 2025 Valentine's Day event, free to play for everyone for a week (i
 | ---: | :---: | ---: | :---: |
 | The Emperor | less room for error + harder to climb | The Tyrant | extremely hard to climb + descent + super fatigue |
 | Temperance | no holding | Asceticism | 1 preview + random + 2 holes |
-| Wheel of Fortune | messier garbage | Loaded Dice | 1.15s lock delay + pattern start |
+| Wheel of Fortune | messier garbage | Loaded Dice | 1.15s line clear delay + pattern start |
 | The Tower | higher gravity + decreased lock delay | Freefall | 20G low lock delay |
 | Strength | double garbage + double cancel | Last Stand | 3x garbage + normal cancel + low board |
 | The Devil | double hole garbage | Damnation | debris garbage lines + checkerboard start |
 | The Hermit | invisible + 5 second flash | The Exile | no more flashing + can't see all garbage |
 | The Magician | no mini + penalize repeats | The Warlock | sudden death + non-spins count as Single + cheese start |
-| The Lovers | two players | | |
+| The Lovers | two players | Bleeding Hearts | (Event) prioritized Backfire toward partner |
 
 ## Extra notes
 
