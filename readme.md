@@ -284,7 +284,7 @@ If `cancel streak` hits 25 and【Volatile Garbage】isn't activated, this attack
 
 #### 4. Carrying protection
 
-If【Duo(+)】is activated and bonus altitude contribution percentage through sending/KOs is less than 20%, multiply sent attack by `55%+contribution%`
+If【Duo(+)】is activated and bonus altitude contribution percentage through sending/KOs is less than 20%, multiply received attack by `55%+contribution%`
 
 #### 5. Targeting Grace protection
 
