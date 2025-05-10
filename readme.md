@@ -206,9 +206,9 @@ If【Volatile Garbage】is activated, values above related to attack are all mul
 **The addition of this system can basically be attributed to the appearance of [Mechanical Hearts](https://bilibili.com/opus/997806608970940469) to prevent brainless high-speed looping, since as long as all garbage is cancelled clearing large amounts of items((?)) is possible**
 
 1. There is a `cancel streak` variable, cancelling N garbage lines adds **+N**  
-1. All Clears add **+5**  
+1. All Clears add **+3**  
 1.【Directed at Mechanical Hearts】Track whether an S or Z is used when clearing an S/Z Spin, if the tetromino used is the same six times in a row then **+2**  
-1.【Directed at Mechanical Hearts】If the I piece is placed vertically at the two edge columns without clearing lines, then check if the four neighbouring blocks on the other column of the same board side, if they're all the I piece's cyan blocks then **+2**  
+1.【Directed at Mechanical Hearts】If the I piece is placed vertically at the two edge columns without clearing lines, then check if the four neighbouring blocks on the other column of the same board side, if they're all the I piece's cyan blocks then **+3**  
 1. When clearing grey tiles (garbage lines) instantly **becomes 0**  
 1. When garbage in queue releases as garbage lines, every line entered through the bottom of the board -3  
 1. When an I-Spin clears lines **-2**  
@@ -226,7 +226,7 @@ Once `cancel streak` reaches certain values, the original 7-bag order becomes mo
 
  - 20: O piece
  - 30: random of L/J
- - 40: random of S/Z, when reached for the first time an I5 is added (5-block long bar, limited to once per game) ((translation note: Pentas using I5 are downgraded to Quad))
+ - 40: random of S/Z,【Directed at Mechanical Hearts】when reached for the first time an I5 is added (5-block long bar, limited to once per game) ((translation note: Pentas using I5 are downgraded to Quad))
  - 50: random of L/J
  - 50: random of T/I
  - 60: random of S/Z
