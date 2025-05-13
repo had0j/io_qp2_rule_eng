@@ -203,20 +203,23 @@ If【Volatile Garbage】is activated, values above related to attack are all mul
 
 ### Cancel streak
 
+<details>
+<summary> The developer doesn't wish for the contents of this chapter to be widely spread, please read cautiously, only players that are highly reliant on loops need to understand </summary>
+
 **The addition of this system can basically be attributed to the appearance of [Mechanical Hearts](https://bilibili.com/opus/997806608970940469) to prevent brainless high-speed looping, since as long as all garbage is cancelled clearing large amounts of items((?)) is possible**
 
 1. There is a `cancel streak` variable, cancelling N garbage lines adds **+N**  
-1. All Clears add **+3**  
-1.【Directed at Mechanical Hearts】Track whether an S or Z is used when clearing an S/Z Spin, if the tetromino used is the same six times in a row then **+2**  
-1.【Directed at Mechanical Hearts】If the I piece is placed vertically at the two edge columns without clearing lines, then check if the four neighbouring blocks on the other column of the same board side, if they're all the I piece's cyan blocks then **+3**  
-1. When clearing grey tiles (garbage lines) instantly **becomes 0**  
-1. When garbage in queue releases as garbage lines, every line entered through the bottom of the board -3  
-1. When an I-Spin clears lines **-2**  
-1. When clearing a Quad **-3**, track the column, if different from both of the previous two times (doesn't repeat tracking, only keep new ones) then another **-4**  
-1. S/Z Spins clearing lines function identically to when an I piece clears a Quad, just with the rotation center column instead. When all different **-2**  
-1. J/L Spins clearing lines function identically to when an I piece clears a Quad, just with the rotation center column instead. When all different **-2**  
-1. Every 30 seconds without doing actions that decrease `cancel streak`: **+5**  
-1. Every 75 pieces without doing actions that decreasse `cancel streak`: **+5**  
+2. All Clears add **+3**  
+3.【Directed at Mechanical Hearts】Track whether an S or Z is used when clearing an S/Z Spin, if the tetromino used is the same as at least five of the last six S/Z Spins **+2**  
+4.【Directed at Mechanical Hearts】If the I piece is placed vertically at the two edge columns without clearing lines, then check if the four neighbouring blocks on the other column of the same board side, if they're all the I piece's cyan blocks then **+3**  
+5. When clearing grey tiles (garbage lines) instantly **becomes 0**  
+6. When garbage in queue releases as garbage lines, every line entered through the bottom of the board -3  
+7. When an I-Spin clears lines **-2**  
+8. When clearing a Quad **-3**, track the column, if different from both of the previous two times (doesn't repeat tracking, only keep new ones) then another **-4**  
+9. S/Z Spins clearing lines function identically to when an I piece clears a Quad, just with the rotation center column instead (individual table). When all different **-2**  
+10. J/L Spins clearing lines function identically to S/Z Spins
+11. Every 30 seconds without doing actions that decrease `cancel streak`: **+5**  
+12. Every 75 pieces without doing actions that decreasse `cancel streak`: **+5**  
 
 > Note 1: This value cannot fall under 0
 > Note 2: sigh even special weapons toward Mechanical Hearts are being used now, you can announce that Mechanical Hearts is victorious, Garbo what are you doing Garbo (
@@ -233,6 +236,8 @@ Once `cancel streak` reaches certain values, the original 7-bag order becomes mo
 
 Will also shorten garbage wait time, see `garbage wait time` chapter for detail  
 Will also increase received garbage amount, see `received amount calculation` chapter for detail
+
+</details>
 
 ### Targeting Grace
 
