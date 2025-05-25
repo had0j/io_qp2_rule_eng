@@ -326,10 +326,10 @@ The `garbage messiness` in this page is exactly this X, which can be affected by
 
 ## Garbage Favor
 
-Decides the choosing trend for garbage hole positions. This value can be positive or negative: the more it is when positive, garbage hole positions will be chosen harder to dig, same reasoning, the more it is negative the easier to dig
+Decides the choosing trend for garbage hole positions. This value can be positive or negative: the more it is when positive, garbage hole positions will be chosen easier to dig, same reasoning, the more it is negative the harder to dig
 
 When this value is 0 (TL etc. modes' normal condition), garbage hole positions are evenly randomly chosen. If `Garbage lines aren't continuous` (messiness_nosame, for example custom room options) is activated at the same time, then it will avoid the last column picked  
-In qp2, this value's default formula is `33-floor*3`, the further the easier, suspected to be used to cancel overly fast difficulty increase from garbage messiness
+In qp2, this value's default formula is `33-floor*3`, the further the harder
 
 When activating【Expert(+)】, this value -33, which means evenly random at the start  
 When activating【Messier Garbage(+)】, this value -25  
@@ -348,6 +348,9 @@ Specific garbage hole position choosing process:
     1. You can observe the graph in this [Desmos document](https://www.desmos.com/calculator/yfzabziltb)
     1. The X axis is the column numbers (left side column 0 is the easiest to dig, right side column 9 is the hardest to dig), the Y axis is the weight, use the slider at the left side to tune the favor value
 1. Decide a column as the garbage hole position via the weight calculation of the previous step
+
+> In an old version, the use of the value was inverted, being the higher the harder
+> After fixing, all categories with【Expert】and*【Messier Garbage】will become harder to an extent, although after fixing, old records weren't deleted ((*translation note: should be or))
 
 ## Garbage gathering
  
@@ -721,8 +724,9 @@ Starting pattern：
 - Receive 10 lines of garbage at the start by the system  
 - `Garbage messiness` is increased
 - Activates `Garbage line protection`
+- 【Seriously?】If 800m is reached and digged garbage row count is under 5, sending attack no longer gains experience
 
-## Special Mods
+## Special mods
 
 ### Duo+ (Bleeding Hearts)
 
