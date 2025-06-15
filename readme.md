@@ -97,6 +97,8 @@ Below are some calculated statistics for convenience:
 |  25  | 100 | 3.08  | 32.5 |  1.85 | 54.17 |
 |  26  | 104 | 2.96  | 35.1 |  1.78 | 58.50 |
 
+> Note: Based on this formula it can be calculated that while completely idle, when at Climb Speed level R's maximum experience amount, it can naturally climb `20R/(R+1)` meters (approaches limit of 20), whereas in Expert it is `12R/(R+1)` (approaches limit of 12)
+
 ### Appearance
 
 You can view which Climb Speed you're at under the board, a simple text description of the appearances are shown below:
