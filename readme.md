@@ -53,9 +53,9 @@ The experience required to promote to the next Climb Speed level is `4*level`, o
 Whenever you promote a Climb Speed level, if there's still a large amount of remaining experience (occuring when several tens of large B2B attack is released) and is still over the amount to increase another Climb Speed level, then you gain an extra `expreience/required experience` levels, **and these extra experience are not removed**
 
     Which means this situation can happen:
-    One frame - Breaking B2B causes large spike and receive lots of experience
-    Next frame - Promote + skip levels 
-    Next frame - Can skip another Climb Speed level
+    One frame - Breaking B2B causes large spike and receive lots of experience, promote + skip levels
+    Next frame - Can promote again due to last frame's level skip not decreasing experience, and in very few circumstances there will be enough experience to promote again
+    Next, next, frame - ...probably impossible to promote again, a bit hard to calculate
 
 ### Experience loss
 
