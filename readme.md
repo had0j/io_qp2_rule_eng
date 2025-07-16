@@ -362,7 +362,7 @@ When enabled, garbage hole positions will never be on the two leftmost or rightm
 
 ## Garbage wait time
 
-When attacked garbage lines will wait in queue for a certain amount of time before entering a triggerable state, during this state placing pieces that don't clear lines causes garbage to enter through the board: transparent yellow → transparent red → opaque red (triggerable)  
+When attacked garbage lines will wait in queue for a certain amount of time before entering a triggerable state, during this state placing pieces that don't clear lines causes garbage to enter through the board: translucent yellow → translucent red → opaque red (triggerable)  
 Waiting time is decided by the floor or certain mods, for specific values see below:
 
 | Floor |  Regular (Non-Expert)   | 【Expert(+)】  |【Messier+/Volatile+/Double Hole+】| Other【Mod+】|
