@@ -26,9 +26,9 @@ Upon reaching certain altitudes one will proceed to the next floor
 
 ## Climb Speed
 
-`Climb Speed` (called `level` below) decides the speed of climbing, every action that increases altitude is impacted by its' multiplier bonus. Increasing Climb Speed requires experience
+`Climb Speed` (called `rank` below) decides the speed of climbing, every action that increases altitude is impacted by its' multiplier bonus. Increasing Climb Speed requires experience
 
-At Climb Speed 1 the multiplier is ×0.25, every level increase adds another ×0.25 (upon reaching ×2.75 it becomes white with no further difference, but in reality there's no upper limit)
+At Climb Speed 1 the multiplier is ×0.25, every rank increase adds another ×0.25 (upon reaching ×2.75 it becomes white with no further difference, but in reality there's no upper limit)
 
 ### Experience
 
@@ -41,34 +41,44 @@ At Climb Speed 1 the multiplier is ×0.25, every level increase adds another ×0
 | Clearing lines | | `min(lines,2)+0.05` experience | ***Doesn't trigger*** during【Expert(+)】, during【All-Spin+】non-spin clears are all considered 1 line |
 | `Crossing floors` | 3m | | The judgement condition is when current altitude (including unreleased temporary altitude) ***triggers*** one of sending/cancelling/clearing while less than 2m away from the next floor |
 
-> Altitude gain above excluding `crossing floors` are all affected by your `level`, for example at the start `level` is 1, multiplier is ×0.25, every 4 seconds gain 1m  
+> Altitude gain above excluding `crossing floors` are all affected by your `rank`, for example at the start `rank` is 1, multiplier is ×0.25, every 4 seconds gain 1m  
 > `Cancel penalty` (see later on for calculation formula details) will decrease received experience from cancelling. Once `cancel penalty` surpasses `cancel streak minus experience threshold`, for every extra point the 50% in the formula will decrease by 0.5%, to a lowest of 5%. This threshold is 40 when activating【Volatile Garbage(+)】, otherwise when【All-Spin(+)】is activated it's 10, otherwise it's 25.
 
 When gaining altitude, the newly increased altitude will first be stored into a temporary variable, every frame release 10%, at maximum 10m 
 
-The experience required to promote to the next Climb Speed level is `4*level`, once your experience meets the conditions your Climb Speed level increases by one and your experience decreases by the amount previously required
+The experience required to promote to the next Climb Speed rank is `4*rank`, once your experience meets the conditions your Climb Speed rank increases by one and your experience decreases by the amount previously required
 
-### Skipping levels
+### Skipping ranks
 
-Whenever you promote a Climb Speed level, if there's still a large amount of remaining experience (occuring when several tens of large B2B attack is released) and is still over the amount to increase another Climb Speed level, then you gain an extra `expreience/required experience` levels, **and these extra experience are not removed**
+Every frame a rank-skip procedure check is done once:
 
-    Which means this situation can happen:
-    One frame - Breaking B2B causes large spike and receive lots of experience, promote + skip levels
-    Next frame - Can promote again due to last frame's level skip not decreasing experience, and in very few circumstances there will be enough experience to promote again
-    Next, next, frame - ...probably impossible to promote again, a bit hard to calculate
+1. When experience reaches the amount needed to promote, remove the promotion amount of experience and increase rank
+2. If the remaining experience is enough to fill the bar again (only happens when releasing tens of B2B, sending a large amount of attack within a single frame), then trigger rank-skipping: immediately raise `experience/required experience` ranks, **and experience isn't removed**
+   
+    Which means this situation can happen:  
+    One frame - Breaking B2B causes large spike and receive lots of experience, promote + skip ranks  
+    Next frame - Due to no experience removal from skipping last frame, a large amount of remaining experience causes another promotion + rank-skip  
+    Next next frame - Similarly...
+
+> Below is an image made through simulation of the procedure, showing the rank difference situation for gaining a large amount of experience by breaking B2B on different ranks. 
+> Excluding the top 20px for row headers, the dimensions of the statistical part is 1000x600, with the top-left corner being the origin
+> Every 1px along the horizontal axis correspond to 0.01 ranks (1.0 to 10.99), every 3px along the vertical axis corresponds to 1 point of experience (1 to 200)
+> Outputting values as ranks, the first row can be used as a reference for colors, with lighter colors meaning closer to the next rank (e.g., 2.0 red, 2.9 pale red)
+
+![Rank skip graph](/rank_skip.png)
 
 ### Experience loss
 
-Experience will naturally decrease over time, decreasing by `mul*(level^2+level)/3600` every frame.  
+Experience will naturally decrease over time, decreasing by `mul*(rank^2+rank)/3600` every frame.  
 mul: Regular solo = 3, when activating【Expert(+)】or【Duo+】= 5, when in Duo = 3 + players with Expert Mode on
 
-When promoting a climb speed level a 5 second `experience loss protection` effect is received, to prevent having very little experience after promotion and suddenly lose it thus demoting right after  
-`Promotion fatigue` system: After promoting, the last line's `no loss for 5 seconds` will decrease by 1 second (until 1 second), therefore the effect gets weaker and weaker when repeatedly gaining and losing `levels`  
+When promoting a climb speed rank a 5 second `experience loss protection` effect is received, to prevent having very little experience after promotion and suddenly lose it thus demoting right after  
+`Promotion fatigue` system: After promoting, the last line's `no loss for 5 seconds` will decrease by 1 second (until 1 second), therefore the effect gets weaker and weaker when repeatedly gaining and losing `ranks`  
 To recover you need to reach 50% (peak of the slant on the middle of the experience bar) from a promotion action (rather than demotion), afterwards triggering this effect next time will have 5 seconds
 
 Below are some calculated statistics for convenience:
 
-| `level` | experience required to promote | seconds to demotion | experience loss per second |【Expert(+)】seconds to demotion |【Expert(+)】loss per second |
+| `rank` | experience required to promote | seconds to demotion | experience loss per second |【Expert(+)】seconds to demotion |【Expert(+)】loss per second |
 | :--: | :-: | :---: | :--: | :---: | :----: |
 |  1   | 4   | 40.00 |  0.1 | 24.00 |  0.17 |
 |  2   | 8   | 26.67 |  0.3 | 16.00 |  0.50 |
@@ -97,13 +107,13 @@ Below are some calculated statistics for convenience:
 |  25  | 100 | 3.08  | 32.5 |  1.85 | 54.17 |
 |  26  | 104 | 2.96  | 35.1 |  1.78 | 58.50 |
 
-> Note: Based on this formula it can be calculated that while completely idle, when at Climb Speed level R's maximum experience amount, it can naturally climb `20R/(R+1)` meters (approaches limit of 20), whereas in Expert it is `12R/(R+1)` (approaches limit of 12)
+> Note: Based on this formula it can be calculated that while completely idle, when at Climb Speed rank R's maximum experience amount, it can naturally climb `20R/(R+1)` meters (approaches limit of 20), whereas in Expert it is `12R/(R+1)` (approaches limit of 12)
 
 ### Appearance
 
 You can view which Climb Speed you're at under the board, a simple text description of the appearances are shown below:
 
-| `level` | Multiplier | Color | Shape | Hyperspeed notes |
+| `rank` | Multiplier | Color | Shape | Hyperspeed notes |
 | :-: | :--: | :-: | - | - |
 |  1  | 0.25 | none         | a progress bar | |
 |  2  | 0.50 | red          | a triangle added below | |
@@ -111,22 +121,26 @@ You can view which Climb Speed you're at under the board, a simple text descript
 |  4  | 1.00 | yellow-green | wings increase size | |
 |  5  | 1.25 | blue         | wings increase size + add base | |
 |  6  | 1.50 | magenta      | wings extend to full size | |
-|  7  | 1.75 | light orange | wings become more detailed | lowest `level` without exiting HYPERSPEED |
-|  8  | 2.00 | turquoise    | pair of parallelograms added on top | HYPERSPEED trigger at f1/f2 |
-|  9  | 2.25 | cyan         | two pairs of parallelograms | HYPERSPEED trigger at f3/f4 |
-| 10  | 2.50 | light purple | three pairs of parallelograms | HYPERSPEED trigger at f5 |
+|  7  | 1.75 | light orange | wings become more detailed | lowest `rank` without exiting Hyperspeed |
+|  8  | 2.00 | turquoise    | pair of parallelograms added on top | Hyperspeed trigger at f1/f2 |
+|  9  | 2.25 | cyan         | two pairs of parallelograms | Hyperspeed trigger at f3/f4 |
+| 10  | 2.50 | light purple | three pairs of parallelograms | Hyperspeed trigger at f5 |
 | 11  | 2.75 | white        | pair of white triangles added | |
 
 ### HYPERSPEED
 
-When the player's `level` reaches 8/8/9/9/10 in the first five floors, HYPERSPEED is activated.  
-Once activated there will be a flashy Bejeweled Twist-esque animation, alongside exclusive HYPERSPEED music.
+When the player's `rank` reaches 8/8/9/9/10 in the first five floors, Hyperspeed is activated.  
+Once activated there will be a flashy Bejeweled Twist-esque animation, alongside exclusive Hyperspeed music.
 
 A large display appears on the top of the screen showing floor splits and your pace compared to your PB Zenith Speedrun time.  
-Reaching floor 10 with HYPERSPEED awards a hidden achievement, or when you fall to `level` 6 or below HYPERSPEED disappears.
+Reaching floor 10 with Hyperspeed awards a hidden achievement, or when you fall to `rank` 6 or below Hyperspeed disappears.
 
 Hyperspeed is disabled when any mod is activated
 
+If you can't get Hyperspeed through raw APM and have to use surge attack, then based off the image from the previous `rank skip` chapter, one can get the following two conclusions:
+- Intentionally waiting until demotion then immediately breaking B2B causes 70 surge attack to almost guarantee Hyperspeed entry (not considering timing may need 80 or even 90)
+- Pending garbage should optimally be empty because experience used to cancel will be halved, if done perfectly only 60 is needed to barely enter, in which the 5-second protection may be utilized
+    
 ## Attack target
 
 You can't manually target someone in this mode, but the state of the player will impact the probability of yourself being attacked: `Targeting Factor`  
@@ -135,8 +149,7 @@ The higher this value the likelier it is to be attacked, **with a starting value
 Note that `Targeting Factor` isn't the only factor that affects being attacked by other players, the player's attack target is fully decided by the server, can only say this value is likely one of the main factors
 
 Other factors that could increase the chance of being chosen as another player's target:
-
-- high Climb Speed level
+- high Climb Speed rank
 - smaller altitude difference to other players
 
 ### Temporary decrease if in danger
@@ -228,7 +241,6 @@ If【Volatile Garbage】is activated, values above related to attack are all mul
 > Note 3: All conditions above have already been overcome by Mechanical Heart's expansion version, despite requiring learning more changes
 
 Once `cancel streak` reaches certain values, the original 7-bag order becomes modified, adding extra pieces to every bag:
-
  - 20: O piece
  - 30: random of L/J
  - 40: random of S/Z,【Directed at Mechanical Hearts】when reached for the first time an I5 is added (5-block long bar, limited to once per game) ((translation note: Pentas using I5 are downgraded to Quad))
@@ -268,7 +280,7 @@ When attacked the amount is adjusted based off various factors, before lastly ap
 
 Calculate `critical altitude` = `max(min(attacker's altitude,3500), min(altitude-1000,2000))`
 
-If altitude is greater than `critical altitude`, multiply received attack by `100% + 0.4% *(altitude - critical altitude)^2) / (altitude + critical altitude)`
+If altitude is greater than `critical altitude`, multiply received attack by `100% + 0.4% *(altitude critical altitude)^2) / (altitude + critical altitude)`
 
 #### 2. Partner penalty
 
@@ -282,7 +294,6 @@ With【Volatile Garbage】without【All-Spin】: 0.0003
 With【All-Spin】without【Volatile Garbage】: 0.002
 
 Attacks add `penalty coefficient * cancel streak ^ 2`, although increase amount won't surpass:
-
 - Basic upper limit: Check floor count, first 7 floors is **floor+3**, unlimited after eighth floor  
 - If currently in windup: choose lower value compared to 6  
 - If【Volatile】is enabled multiply by 2
@@ -465,7 +476,7 @@ There are a total of 9 mods, each corresponding with a special effect that can b
 - Non-T tetromino's Spins can be like T providing lines*2 of base attack (see the start for Spin detection rules)
 - Whenever clearing lines (accurately it should be when a piece locks and action text appears, non-line-clear Spins can also trigger), if it's the exact same as the action text in the top-left corner, then a special full garbage line instantly appears as punishment, with a reverse tally of `current floor+5` on a random position, when the player does an unpunished line clear -1, upon hitting zero it turns into a regular one-hole garbage line, with the garbage hole on the same position as where the number was
 
-> Only mod that can give a more positive effect after the player reaeches a certain skill level
+> Only mod that can give a more positive effect after the player reaeches a certain skill rank
 
 ### Duo (The Lovers)
 
@@ -617,7 +628,7 @@ On top of all limits of the original basis,
 - When you stay on the same floor for over 60 seconds, every second permanently gain 0.5% multiplier to be attacked (for example after accumulating the effect for 200 seconds all incoming garbage is doubled)
 - Fatigue system becomes even more harsh
 
-|     Floor     |  Descent speed | Corresponding `level` and spm |
+|     Floor     |  Descent speed | Corresponding `rank` and spm |
 | :--------: | :-----: | :---------: |
 |  1 (0m)    | 0.6 m/s | 3 & 48spm |
 |  2 (50m)   | 0.8 m/s | 4 & 48spm |
@@ -631,7 +642,7 @@ On top of all limits of the original basis,
 | 10 (1650m) | 6.0 m/s | 7 & 206spm |
 
 > Descent speed formula is `(floor^2+floor+10)/20`  
-> `level` and spm are only for reference, in reality cancelling doesn't count for spm so it can't be achieved, after the fifth-sixth floor you have to rely on 3-digit surge APM to continue climbing  ((translation note: SPM = Sent Per Minute))  
+> `rank` and spm are only for reference, in reality cancelling doesn't count for spm so it can't be achieved, after the fifth-sixth floor you have to rely on 3-digit surge APM to continue climbing  ((translation note: SPM = Sent Per Minute))  
 > During gameplay descent looks like it has acceleration, but it's only a visual effect, in reality it's still even
 
 | Time | Negative effect | Text description |
@@ -738,9 +749,9 @@ Exclusive to 2025 Valentine's Day event, free to play for everyone for a week (i
 
 - When attacking (sending/cancelling both count) there is a Backfire, prioritizing the partner, if already dead then it will attack yourself (parameter is Zen mode's unclear 0.5x, without warning or waiting instantaneously enter the board)
 - When one of the players dies the altitude will be temporary locked, until being revived  
-- Climb Speed level is locked to a highest of 4 (normally unlimited)  
+- Climb Speed rank is locked to a highest of 4 (normally unlimited)  
 - Special fatigue process
-- ((translation note: apparently Climb Speed level is capped at 5 (blue) as well, not sure if this is correct though))
+- ((translation note: apparently Climb Speed rank is capped at 5 (blue) as well, not sure if this is correct though))
 
 |  Time  | Effect | Description |
 | ----- | --- | --- |
@@ -751,7 +762,7 @@ Exclusive to 2025 Valentine's Day event, free to play for everyone for a week (i
 |  3:00 | `Garbage messiness`= 0% | THINGS ARE BACK TO HOW THEY SHOULD BE…!  garbage becomes much cleaner |
 |  3:30 | `Garbage messiness`= 10% | THE WEIGHT OF WORDS UNSPOKEN…  garbage becomes messier |
 |  4:00 | `Garbage messiness`= 25% | "WHY CAN'T YOU JUST LISTEN TO ME?"  garbage becomes much messier |
-|  4:30 | Revive difficulty +3 levels | "THIS IS ALL YOUR FAULT."  revive difficulty increased |
+|  4:30 | Revive difficulty +3 ranks | "THIS IS ALL YOUR FAULT."  revive difficulty increased |
 |  5:00 | `Garbage messiness`= 10% | {PARTNER} MAKES THE SAME PROMISE AGAIN…  garbage becomes cleaner |
 |  5:30 | +4 permanent garbage lines | "THIS TIME WILL BE DIFFERENT."  +4 PERMANENT GARBAGE |
 |  6:00 | `Garbage messiness`= 30% | SOME HABITS CAN'T BE BROKEN…  garbage becomes much messier |
