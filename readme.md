@@ -60,10 +60,10 @@ Every frame a rank-skip procedure check is done once:
     Next frame - Due to no experience removal from skipping last frame, a large amount of remaining experience causes another promotion + rank-skip  
     Next next frame - Similarly...
 
-> Below is an image made through simulation of the procedure, showing the rank difference situation for gaining a large amount of experience by breaking B2B on different ranks. 
-> Excluding the top 20px for row headers, the dimensions of the statistical part is 1000x600, with the top-left corner being the origin
-> Every 1px along the horizontal axis correspond to 0.01 ranks (1.0 to 10.99), every 3px along the vertical axis corresponds to 1 point of experience (1 to 200)
-> Outputting values as ranks, the first row can be used as a reference for colors, with lighter colors meaning closer to the next rank (e.g., 2.0 red, 2.9 pale red)
+> Below is an image made through simulation of the procedure, showing the rank difference situation for gaining a large amount of experience by breaking B2B on different ranks.  
+> Excluding the top 20px for row headers, the dimensions of the statistical part is 1000x600, with the top-left corner being the origin  
+> Every 1px along the horizontal axis corresponds to 0.01 ranks (1.0 to 10.99), every 3px along the vertical axis corresponds to 1 point of experience (1 to 200)  
+> Outputting values as ranks, the first row can be used as a reference for colors, with lighter colors meaning closer to the next rank (e.g., 2.0 red, 2.9 pale red)  
 
 ![Rank skip graph](/rank_skip.png)
 
