@@ -160,7 +160,7 @@ Only in `Easy mode`, check once every 0.25 seconds, if in danger (conditions not
 
 There is a `Targeting Grace` value, when attacked, lines*0.25 amount of `Targeting Factor` gets moved to the targeting grace buffer slot (maximum 3, otherwise doesn't move), then gets moved back later.
 
-When the buffer slot for `Targeting Grace` is filled (hits 3), attack magnification decreases by 25% (continuous attacks all send 25% less garbage)
+When the buffer slot for `Targeting Grace` is filled (hits 3), attack multiplier decreases by 25% (continuous attacks all send 25% less garbage)
 
 The `Targeting Grace` value (linear) will decrease garbage messiness, when fully filled can cause `change between attacks -45%` and `change during attack -18%` 
 
@@ -327,14 +327,13 @@ The `garbage messiness` in this page is exactly this X, which can be affected by
 | Element | Impact value |
 | :-: | :-: |
 | Floor | `Floor*3%`, in【Expert(+)】`Floor*5%` |
-|【Expert(+)】| +Floor*2% |
 |【Messier Garbage(+)】| +25% (100%) |
 |【All-Spin+】| +30% |
 |【Expert+】's 11 minute Fatigue `full scatter` effect | =100% (calculations above can surpass 100%, this effect overwrites) |
 | `Targeting Grace` (calculated when finally spawns) | every point of `Targeting Grace` decreases Y by 3.75%, X by 1.5% |
 
 > When `Targeting Grace` hits 18 points, Y is decreased by 67.5%, X by 27%  
-> Genuinely didn't write in the wrong order, quite weird here, probably need to pull a table to observe garbage messiness changes deduced from various factors  
+> Genuinely didn't write in the wrong order, quite weird here, probably need to pull a table to observe garbage messiness changes deduced from various factors   
 > After receiving the `full scatter` effect when both values are overwritten as 100%, instead between attacks it's even more likely to be on the same column, very interesting
 
 ## Garbage Favor
