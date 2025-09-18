@@ -2,6 +2,11 @@
 
 The`【XX】`in this document is the format for mods. For specifics see the Mods chapter
 
+## Translation notice
+Due to how I originally approached translating the original documentation, for most of the document not only is the original wording preserved, but also the grammatical structure, which may make it feel unnatural or harder to read. This weekend I'll try to rewrite a new version that retains most of the layout and information of the original documentation but with different wording to account for differences between the two languages, like with the [unofficial Red Bull Tetris document](https://github.com/had0j/red-bull-tetris-doc-eng). Thanks for understanding.
+
+If there are illegible parts, try to refer to the original document with machine translation.
+
 ## Start
 
 This mode doesn't have a global "round", anyone can enter at any time without waiting
