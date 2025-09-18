@@ -847,7 +847,7 @@ If you can understand JavaScript code: [Extra technological information](/Extra_
 【Advertisement】After experiencing, feel like these mods are too hard? Don't want to grind reverse mod unlocks due to being too inconvenient?  
  If you already have a basic understanding of every mod, then check out this new game! Grandly introduce……  
  [***天穹点点乐 Zenith Clicker***](https://github.com/MrZ626/ZenithClicker)  
- ((translation note: this is real))
+ ((translation note: This is present in the original document))
 
 ## Special thanks
 
