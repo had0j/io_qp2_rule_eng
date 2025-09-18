@@ -24,6 +24,16 @@ Upon reaching certain altitudes one will proceed to the next floor
 | Floor 9 | 1350m - 1650m | Corruption |
 | Floor 10 | 1650m+ | Platform of The Gods |
 
+## Gravity
+
+This mode's starting gravity is **g=0.02**, unit **cells/frame**
+
+The speed of gravity increase is **gincrease=0.0005**, unit **cells/frames/second**
+
+(The time gravity starts to increase is **gmargin=0**, which means it increases from the start of a game)
+
+> Note: These variable values are derived from the "classic" preset
+
 ## Climb Speed
 
 `Climb Speed` (called `rank` below) decides the speed of climbing, every action that increases altitude is impacted by its' multiplier bonus. Increasing Climb Speed requires experience
@@ -294,7 +304,7 @@ With【Volatile Garbage】without【All-Spin】: 0.0003
 With【All-Spin】without【Volatile Garbage】: 0.002
 
 Attacks add `penalty coefficient * cancel streak ^ 2`, although increase amount won't surpass:
-- Basic upper limit: Check floor count, first 7 floors is **floor+3**, unlimited after eighth floor  
+- Basic upper limit: Check floor count, first 7 floors are **floor+3**, unlimited after eighth floor  
 - If currently in windup: choose lower value compared to 6  
 - If【Volatile】is enabled multiply by 2
 
@@ -314,13 +324,14 @@ Multiply attack by `attack received multiplier`, then round (use decimals as wei
 
 The chance for garbage holes to continue. The higher this value, the more likely each line's hole is different
 
-TETR.IO's garbage messiness system is decided by two numbers:  
-“every line in the same attack has an X% chance to reroll the position”, “different attacks have a Y% chance to reroll the position” 
+TETR.IO's garbage messiness system is decided by two numbers: 
+unconsecutive hole column change rate: “every row of the same segment has an X% chance to reroll the position” ((translation note: known as "change during attack" in TETR.IO)) 
+consecutive hole column change rate: “different segments have a Y% chance to reroll the position” ((translation note: known as "change on attack" in TETR.IO)) 
 
 In TL X=0, Y=100%, which means the garbage lines in the same attack are almost always on different columns (unchanged if rerolled on the same position, 10%) 
 But in qp2 these two numbers aren't as extreme, meaning you'll feel the position of garbage holes aren't that related to the attacks in queue.
 
-In qp2, by default Y=2.5*X, which means between received garbage attacks there's a higher chance (2.5 times) to be on a different column
+In qp2, usually Y=2.5*X, which means between received garbage attacks there's a higher chance (2.5 times) to be on a different column (when over 100% the effect is the same as 100% but overflows)
 
 The `garbage messiness` in this page is exactly this X, which can be affected by various factors
 
@@ -366,7 +377,7 @@ Specific garbage hole position choosing process:
 
 ## Garbage gathering
  
-There is a `garbage gathering` toggle, enabled when `garbage messiness` <=15% and within the first 5 floors
+There is a `garbage gathering` toggle, enabled when `change during attack rate` <=15% and within the first 5 floors
  
 When enabled, garbage hole positions will never be on the two leftmost or rightmost columns, which means it's always on columns 3~8
 
@@ -443,8 +454,8 @@ There are a total of 9 mods, each corresponding with a special effect that can b
 
 > What will you do when it all comes crumbling down?
 
-- Gravity noticeably increases
-- Lock delay table for the ten floors (unit frames): 30, 29, 28, 27, 26, 24, 22, 20, 18, 16
+- Gravity noticeably increases, upon reaching a new floor gravity speed increases by an additional amount, other than the starting +0.48 which turns it from 0.02g to 0.5g, other floors add +0.3 (cells/frame)
+- Lock delay table for the ten floors: 30, 29, 28, 27, 26, 24, 22, 20, 18, 16 (unit: frames)
 
 ### Volatile Garbage (Strength)
 
@@ -695,7 +706,7 @@ Starting pattern：
 
 > The ground you stood on never existed in the first place.
 
-- 20G from the start (lock delay table for the ten floors: 24, 22, 20, 18, 16, 15, 14, 13, 12, 11)
+- 20G from the start, lock delay table for the ten floors: 24, 22, 20, 18, 16, 15, 14, 13, 12, 11 (unit: frames)
 
 ### Volatile Garbage+ (Last Stand)
 
