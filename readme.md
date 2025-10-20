@@ -1,11 +1,12 @@
 # TETR.IO rules observance summary by MrZ_26
 
-The`【XX】`in this document is the format for mods. For specifics see the Mods chapter
+The` [XX] `in this document is the format for mods. For specifics see the Mods chapter
 
 ## Translation notice
-Due to how I originally approached translating the original documentation, for most of the document not only is the original wording preserved, but also the grammatical structure, which may make it feel unnatural or harder to read. This weekend I'll try to rewrite a new version that retains most of the layout and information of the original documentation but with different wording to account for differences between the two languages, like with the [unofficial Red Bull Tetris document](https://github.com/had0j/red-bull-tetris-doc-eng). Thanks for understanding.
+Due to how I originally approached translating the original documentation, for most of the document not only is the original wording preserved, but also the grammatical structure, which may make it feel unnatural or harder to read. ~~This weekend~~ ..hopefully one day I'll try to rewrite a new version that retains most of the layout and information of the original documentation but with different wording to account for differences between the two languages, like with the [unofficial Red Bull Tetris document](https://github.com/had0j/red-bull-tetris-doc-eng). Thanks for understanding.
 
-If there are illegible parts, try to refer to the original document with machine translation.
+If there are illegible parts or this version is outdated, please refer to the original document with machine translation.
+Currently synchronized with [ee45cdf](https://github.com/MrZ626/io_qp2_rule/commit/ee45cdfbcaacb7771eb084e70f29881d296cea49).
 
 ## Start
 
@@ -50,14 +51,14 @@ At Climb Speed 1 the multiplier is ×0.25, every rank increase adds another ×0.
 | Action | Altitude | Experience | Notes |
 | :--: | :--: | :--: | :-- |
 | Natural increase | Every second 1m | naturally depletes, see `experience loss` chapter | Will get `stuck`, slowly becomes 0 when 6m~1m away from next floor |
-| KO | `15m` | | `8m` in【Expert+】|
+| KO | `15m` | | `8m` in [rEX] |
 | Sending attack | `lines`m | `lines+0.05` experience | |
-| Cancelling garbage | | `lines*50%+0.05` experience | During【Expert(+)】【Volatile+】【Duo+】considered as 0 lines |
-| Clearing lines | | `min(lines,2)+0.05` experience | ***Doesn't trigger*** during【Expert(+)】, during【All-Spin+】non-spin clears are all considered 1 line |
+| Cancelling garbage | | `lines*50%+0.05` experience | During [(r)EX]  [rVL]  [r2P] considered as 0 lines |
+| Clearing lines | | `min(lines,2)+0.05` experience | ***Doesn't trigger*** during [r(EX)] , during [rAS] non-spin clears are all considered 1 line |
 | `Crossing floors` | 3m | | The judgement condition is when current altitude (including unreleased temporary altitude) ***triggers*** one of sending/cancelling/clearing while less than 2m away from the next floor |
 
 > Altitude gain above excluding `crossing floors` are all affected by your `rank`, for example at the start `rank` is 1, multiplier is ×0.25, every 4 seconds gain 1m  
-> `Cancel penalty` (see later on for calculation formula details) will decrease received experience from cancelling. Once `cancel penalty` surpasses `cancel streak minus experience threshold`, for every extra point the 50% in the formula will decrease by 0.5%, to a lowest of 5%. This threshold is 40 when activating【Volatile Garbage(+)】, otherwise when【All-Spin(+)】is activated it's 10, otherwise it's 25.
+> `Cancel penalty` (see later on for calculation formula details) will decrease received experience from cancelling. Once `cancel penalty` surpasses `cancel streak minus experience threshold`, for every extra point the 50% in the formula will decrease by 0.5%, to a lowest of 5%. This threshold is 40 when activating [(r)VL] , otherwise when [(r)AS] is activated it's 10, otherwise it's 25.
 
 When gaining altitude, the newly increased altitude will first be stored into a temporary variable, every frame release 10%, at maximum 10m 
 
@@ -85,7 +86,7 @@ Every frame a rank-skip procedure check is done once:
 ### Experience loss
 
 Experience will naturally decrease over time, decreasing by `mul*(rank^2+rank)/3600` every frame.  
-mul: Regular solo = 3, when activating【Expert(+)】or【Duo+】= 5, when in Duo = 3 + players with Expert Mode on
+mul: Regular solo = 3, when activating [(r)EX] or [r2P] = 5, when in Duo = 3 + players with Expert Mode on
 
 When promoting a climb speed rank a 5 second `experience loss protection` effect is received, to prevent having very little experience after promotion and suddenly lose it thus demoting right after  
 `Promotion fatigue` system: After promoting, the last line's `no loss for 5 seconds` will decrease by 1 second (until 1 second), therefore the effect gets weaker and weaker when repeatedly gaining and losing `ranks`  
@@ -93,7 +94,7 @@ To recover you need to reach 50% (peak of the slant on the middle of the experie
 
 Below are some calculated statistics for convenience:
 
-| `rank` | experience required to promote | seconds to demotion | experience loss per second |【Expert(+)】seconds to demotion |【Expert(+)】loss per second |
+| `rank` | experience required to promote | seconds to demotion | experience loss per second | [(r)EX] seconds to demotion | [(r)EX] loss per second |
 | :--: | :-: | :---: | :--: | :---: | :----: |
 |  1   | 4   | 40.00 |  0.1 | 24.00 |  0.17 |
 |  2   | 8   | 26.67 |  0.3 | 16.00 |  0.50 |
@@ -122,7 +123,7 @@ Below are some calculated statistics for convenience:
 |  25  | 100 | 3.08  | 32.5 |  1.85 | 54.17 |
 |  26  | 104 | 2.96  | 35.1 |  1.78 | 58.50 |
 
-> Note: Based on this formula it can be calculated that while completely idle, when at Climb Speed rank R's maximum experience amount, it can naturally climb `20R/(R+1)` meters (approaches limit of 20), whereas in Expert it is `12R/(R+1)` (approaches limit of 12)
+> Note: Based on this formula it can be calculated that while completely idle, when at Climb Speed rank R's maximum experience amount, it can naturally climb `20R/(R+1)` meters (approaches limit of 20), whereas in EX it is `12R/(R+1)` (approaches limit of 12)
 
 ### Appearance
 
@@ -221,13 +222,14 @@ When B2B is broken a large attack is created, attack is `B2B count -3`, (or the 
 
 If a single attack with 8 or more lines is received, this attack will be split into multiple parts and have a warning hint before being received, to prevent easily topping out after targeting multiplier is increased due to various reasons
 
-Splitting rule: Split the attack into several groups of 4 and the remainder portion, at maximum 4 groups (all extra attack are put in the last segment), for example 14 attack will be split into 4+4+4+2
+Splitting rule: ~~Split the attack into several groups of 4 and the remainder portion, at maximum 4 groups (all extra attack are put in the last segment), for example 14 attack will be split into 4+4+4+2~~
+((Temporary paraphrasing, will update to format of io_qp2_rule soon)): After 4000m, every 500m adds one to the maximum amount of garbage from a windup (e.g., at 5100m the maximum becomes 19 or 38). The maximum number is then split evenly into four segments of target amounts, with the last segments containing the remainder when not perfectly divisible (e.g., maximum of 19 splits into targets of [4, 5, 5, 5]). The actual amount of garbage then attempts to fill these target amounts until running out or reaching the maximum, so for example, receiving 15 with a maximum of 19 causes it to split into [4, 5, 5, 1]
 
 Warning method: When receiving this type of attack start playing warning animations and sound effects  
-The amount of sound effects corresponds to the amount of groups the current round's attack split into (for example 3 sounds corresponds to 4+4+n, or 9~12 attack)  
+The amount of sound effects corresponds to the amount of groups the current round's attack split into (for example 3 sounds corresponds to 4+4+n)  
 1 second later the attacks start entering the garbage queue, each split is separated by 0.5s
 
-If【Volatile Garbage】is activated, values above related to attack are all multiplied (seems like so, individual circumstances will ±1) ((translation note: I have no idea what the text inside the parentheses mean, sorry if it's unclear.))
+If [VL] is activated, values above related to attack are all multiplied (seems like so, individual circumstances will ±1) ((translation note: I have no idea what the text inside the parentheses mean, sorry if it's unclear.))
 
 ## Others related to attack
 
@@ -240,8 +242,8 @@ If【Volatile Garbage】is activated, values above related to attack are all mul
 
 1. There is a `cancel streak` variable, cancelling N garbage lines adds **+N**  
 2. All Clears add **+3**  
-3.【Directed at Mechanical Hearts】Track whether an S or Z is used when clearing an S/Z Spin, if the tetromino used is the same as at least five of the last six S/Z Spins **+2**  
-4.【Directed at Mechanical Hearts】If the I piece is placed vertically at the two edge columns without clearing lines, then check if the four neighbouring blocks on the other column of the same board side, if they're all the I piece's cyan blocks then **+3**  
+3. [Directed at Mechanical Hearts] Track whether an S or Z is used when clearing an S/Z Spin, if the tetromino used is the same as at least five of the last six S/Z Spins **+2**  
+4. [Directed at Mechanical Hearts] If the I piece is placed vertically at the two edge columns without clearing lines, then check if the four neighbouring blocks on the other column of the same board side, if they're all the I piece's cyan blocks then **+3**  
 5. When clearing grey tiles (garbage lines) instantly **becomes 0**  
 6. When garbage in queue releases as garbage lines, every line entered through the bottom of the board -3  
 7. When an I-Spin clears lines **-2**  
@@ -258,7 +260,7 @@ If【Volatile Garbage】is activated, values above related to attack are all mul
 Once `cancel streak` reaches certain values, the original 7-bag order becomes modified, adding extra pieces to every bag:
  - 20: O piece
  - 30: random of L/J
- - 40: random of S/Z,【Directed at Mechanical Hearts】when reached for the first time an I5 is added (5-block long bar, limited to once per game) ((translation note: Pentas using I5 are downgraded to Quad))
+ - 40: random of S/Z, [Directed at Mechanical Hearts] when reached for the first time an I5 is added (5-block long bar, limited to once per game) ((translation note: Pentas using I5 are downgraded to Quad))
  - 50: random of L/J
  - 50: random of T/I
  - 60: random of S/Z
@@ -270,11 +272,11 @@ Will also increase received garbage amount, see `received amount calculation` ch
 
 ### Targeting Grace
 
-There is a `Targeting Grace` variable, when attacked increase the same amount of value as received garbage in queue (value through various penalty/protection adjustments, not the original attack amount, excluding【Volatile Garbage+】's 3x isn't counted), until capping at **18**  
-`Targeting Grace`'s value decreases `garbage messiness`, although this system is blocked by these reasons: when time reaches 6 minutes in【Expert+】,【Messier Garbage(+)】 
+There is a `Targeting Grace` variable, when attacked increase the same amount of value as received garbage in queue (value through various penalty/protection adjustments, not the original attack amount, excluding [rVL]'s 3x isn't counted), until capping at **18**  
+`Targeting Grace`'s value decreases `garbage messiness`, although this system is blocked by these reasons: when time reaches 6 minutes in [rEX] , [(r)MG]  
 If `Targeting Grace`>0, then it will decrease by 1 a bit of time after “last moment of being attacked”, and refresh “last moment of being attacked” as the current moment, release gaps are shown below:
 
-| Floor | Release every (seconds) | During【Expert+】|
+| Floor | Release every (seconds) | During [rEX] |
 | :-: | :-: | :-: |
 | 1  | 4.8 | 1.0 |
 | 2  | 3.9 | 0.9 |
@@ -299,23 +301,23 @@ If altitude is greater than `critical altitude`, multiply received attack by `10
 
 #### 2. Partner penalty
 
-If【Duo(+)】is activated and the partner is dead, multiply received attack by `150%`
+If [(r)2P] is activated and the partner is dead, multiply received attack by `150%`
 
 #### 3. Cancel penalty (pattern penalty)
 
 First fetch `penalty coefficient`  
 Default 0.001  
-With【Volatile Garbage】without【All-Spin】: 0.0003  
-With【All-Spin】without【Volatile Garbage】: 0.002
+With [VL] without [AS] : 0.0003  
+With [AS] without [VL] : 0.002
 
 Attacks add `penalty coefficient * cancel streak ^ 2`, although increase amount won't surpass:
 - Basic upper limit: Check floor count, first 7 floors are **floor+3**, unlimited after eighth floor  
 - If currently in windup: choose lower value compared to 6  
-- If【Volatile】is enabled multiply by 2
+- If [VL] is enabled multiply by 2
 
 #### 4. Carrying protection
 
-If【Duo(+)】is activated and bonus altitude contribution percentage through sending/KOs is less than 20%, multiply received attack by `55%+contribution%`
+If [(r)2P] is activated and bonus altitude contribution percentage through sending/KOs is less than 20%, multiply received attack by `55%+contribution%`
 
 #### 5. Targeting Grace protection
 
@@ -342,10 +344,10 @@ The `garbage messiness` in this page is exactly this X, which can be affected by
 
 | Element | Impact value |
 | :-: | :-: |
-| Floor | `Floor*3%`, in【Expert(+)】`Floor*5%` |
-|【Messier Garbage(+)】| +25% (100%) |
-|【All-Spin+】| +30% |
-|【Expert+】's 11 minute Fatigue `full scatter` effect | =100% (calculations above can surpass 100%, this effect overwrites) |
+| Floor | `Floor*3%`, in [(r)EX] `Floor*5%` |
+| [(r)MG)] | +25% (100%) |
+| [rAS] | +30% |
+| [rEX] 's 11 minute Fatigue `full scatter` effect | =100% (calculations above can surpass 100%, this effect overwrites) |
 | `Targeting Grace` (calculated when finally spawns) | every point of `Targeting Grace` decreases Y by 3.75%, X by 1.5% |
 
 > When `Targeting Grace` hits 18 points, Y is decreased by 67.5%, X by 27%  
@@ -359,12 +361,12 @@ Decides the choosing trend for garbage hole positions. This value can be positiv
 When this value is 0 (TL etc. modes' normal condition), garbage hole positions are evenly randomly chosen. If `Garbage lines aren't continuous` (messiness_nosame, for example custom room options) is activated at the same time, then it will avoid the last column picked  
 In qp2, this value's default formula is `33-floor*3`, the further the harder
 
-When activating【Expert(+)】, this value -33, which means evenly random at the start  
-When activating【Messier Garbage(+)】, this value -25  
-When activating【Volatile Garbage+】, this value is locked to 50 for the entire run
+When activating [(r)EX] , this value -33, which means evenly random at the start  
+When activating [(r)MG] , this value -25  
+When activating [rVL] , this value is locked to 50 for the entire run
 
-> The worst condition is Floor 10【Expert】【Messier Garbage】's -55   
-> The easiest is【Volatile Garbage+】's 50
+> The worst condition is Floor 10 [EX]  [MG] 's -55   
+> The easiest is [rVL] 's 50
 
 Specific garbage hole position choosing process:
 1. Calculate every columns' `dig difficulty score`
@@ -378,7 +380,7 @@ Specific garbage hole position choosing process:
 1. Decide a column as the garbage hole position via the weight calculation of the previous step
 
 > In an old version, the use of the value was inverted, being the higher the harder
-> After fixing, all categories with【Expert】and*【Messier Garbage】will become harder to an extent, although after fixing, old records weren't deleted ((*translation note: should be or))
+> After fixing, all categories with [EX] and* [MG] will become harder to an extent, although after fixing, old records weren't deleted ((*translation note: should be or))
 
 ## Garbage gathering
  
@@ -391,7 +393,7 @@ When enabled, garbage hole positions will never be on the two leftmost or rightm
 When attacked garbage lines will wait in queue for a certain amount of time before entering a triggerable state, during this state placing pieces that don't clear lines causes garbage to enter through the board: translucent yellow → translucent red → opaque red (triggerable)  
 Waiting time is decided by the floor or certain mods, for specific values see below:
 
-| Floor |  Regular (Non-Expert)   | 【Expert(+)】  |【Messier+/Volatile+/Double Hole+】| Other【Mod+】|
+| Floor |  Regular (Non-EX)   |  [(r)EX]   | [rMG/rVL/rDH] | Other [Mod+] |
 | :-: | :----------: | :---------: | :-------------: | :-----: |
 |  1  |  5.0s (300f)  | 2.2s (132f) |   **2.5s**    |**2.5s**|
 |  2  |  4.5s (270f)  | 2.0s (120f) |   **2.5s**    |**2.5s**|
@@ -422,17 +424,17 @@ To prevent a game from being too long, starting from 8 minutes every minute adds
 |  11:00 | +25% attack received multiplier | YOUR CONSCIOUSNESS FADES… receive 25% more garbage |
 |  12:00 | +5 permanent garbage (total 10) | THIS IS THE END. +5 PERMANENT LINES |
 
-> In【Expert+】Fatigue effects are different, see later below for specifics
+> In [rEX] Fatigue effects are different, see later below for specifics
 
 ## Mods
 
-In this page `Easy mode` means not activating【Expert(+)】and not activating【Mod+】
+In this page `Easy mode` means not activating [(r)EX] and not activating [Mod+] 
 
 Mods are ways you can increase the difficulty before starting a run, with basically only downsides and no upsides, but activating mods (or specific mod combinations) and reaching certain altitudes can grant achievements
 
 There are a total of 9 mods, each corresponding with a special effect that can be individually toggled, with the setting having them as Tarot Cards, a description will be written after the mod name below, there will also be a table for convenience at the end of the chapter
 
-### Expert Mode (The Emperor)
+### EX Expert Mode (The Emperor)
 
 > A display of power for those willing to bear its burden.
 
@@ -442,27 +444,27 @@ There are a total of 9 mods, each corresponding with a special effect that can b
 - Rising garbage animation is removed, instead spawns instantaneously (same as TL)
 - Removes system of decreasing `Targeting Factor` when in danger
 
-### No Hold (Temperance)
+### NH No Hold (Temperance)
 
 > Use each piece as they come and embrace the natural flow of stacking.
 
 - Disables holding
 
-### Messier Garbage (Wheel of Fortune)
+### MG Messier Garbage (Wheel of Fortune)
 
 > The only constant in life is change.
 
 - `Garbage messiness` increases
 - `Garbage Favor` decreases
 
-### Gravity (The Tower)
+### GV Gravity (The Tower)
 
 > What will you do when it all comes crumbling down?
 
 - Gravity noticeably increases, upon reaching a new floor gravity speed increases by an additional amount, other than the starting +0.48 which turns it from 0.02g to 0.5g, other floors add +0.3 (cells/frame)
 - Lock delay table for the ten floors: 30, 29, 28, 27, 26, 24, 22, 20, 18, 16 (unit: frames)
 
-### Volatile Garbage (Strength)
+### VL Volatile Garbage (Strength)
 
 > Match great obstacles with greater determination.
 
@@ -471,20 +473,20 @@ There are a total of 9 mods, each corresponding with a special effect that can b
 > Can be summarized as received garbage on the board is x2  
 > Because it just increases the amount of garbage lines, therefore also indirectly decreases garbage messiness, so this mod can speed up climbing progress at the start, but poses too much of a threat in the endgame so whether its good or not is dependent on the specific type of play
 
-### Double Hole Garbage (The Devil)
+### DH Double Hole Garbage (The Devil)
 
 > Redefine your limits or succumb to his chains.
 
 - Every line of garbage has a chance to have two holes
 
-### Invisible (The Hermit)
+### IN Invisible (The Hermit)
 
 > When the outside world fails you, trust the voice within to light a path.
 
 - Pieces placed become invisible  
 - Every 5 seconds the whole board flashes which can be convenient for digging
 
-### All-Spin (The Magician)
+### AS All-Spin (The Magician)
 
 > Inspiration is nothing short of magic.
 
@@ -493,7 +495,7 @@ There are a total of 9 mods, each corresponding with a special effect that can b
 
 > Only mod that can give a more positive effect after the player reaeches a certain skill rank
 
-### Duo (The Lovers)
+### 2P Duo (The Lovers)
 
 > Love, and resign yourself to the fate of another.
 
@@ -513,8 +515,8 @@ Tasks that will appear are shown below:
 | F | odouble            | 1   | Clear a Double\nusing an O-Piece | 3 | |
 | F | szdouble           | 1   | Clear a Double\nusing an S or Z-Piece | 3 | |
 | F | ljtriple           | 1   | Clear a Triple\nusing an L or J-Piece | 3 | |
-| F | iholdlines         | 3   | Clear 3 lines\nwhile holding an I-Piece | 3 |【No Hold】|
-| F | hold               | 8   | Use Hold 8 times | 2 |【No Hold】|
+| F | iholdlines         | 3   | Clear 3 lines\nwhile holding an I-Piece | 3 | [NH] |
+| F | hold               | 8   | Use Hold 8 times | 2 | [NH] |
 | F | rotate             | 20  | Rotate 20 times | 2 | |
 | F | singleconsecutive  | 2   | Clear 2 Singles in a row | 3 | |
 | E | spin               | 1   | Perform any Spin | 2 | |
@@ -526,7 +528,7 @@ Tasks that will appear are shown below:
 | E | iflat              | 2   | Clear 2 Lines using\nhorizontal I-Pieces | 3 | |
 | E | pieces             | 20  | Place 20 pieces | 2 | |
 | E | attack             | 6   | Send 6 Attack | 1 | |
-| E | placeoconsecutive  | 2   | Place 2 O-Pieces\nin a row | 3 | |
+| E | placeoconsecutive  | 2   | Place 2 O-Pieces\nin a row | 3 | [NH] |
 | E | norotateclockwise  | 12  | Place 12 pieces while only\nrotating counterclockwise | 4 | |
 | E | singlenocombo      | 6   | Clear 6 Singles without\nstarting a combo | 3 | |
 | D | double             | 4   | Clear 4 Doubles | 2 | |
@@ -543,16 +545,16 @@ Tasks that will appear are shown below:
 | D | noclearspin        | 3   | Perform 3 Spins\nthat don't clear any lines | 4 | |
 | D | szljspin           | 2   | | Perform 2\nS/Z/L/J-Spins | 3 | |
 | C | tspintriple        | 1   | Clear a T-Spin Triple | 2 | |
-| C | nohold             | 25  | Place 25 pieces in a row\nwithout using Hold | 4 |【No Hold】|
+| C | nohold             | 25  | Place 25 pieces in a row\nwithout using Hold | 4 | [NH] |
 | C | triple             | 3   | Clear 3 Triples | 2 | |
 | C | b2b                | 4   | Reach B2B x4 | 1 | |
 | C | quadbuckets        | 2   | Clear a Quad in\n2 different columns | 3 | |
-| C | holdconsecutive    | 12  | Use Hold on\n12 pieces in a row | 3 |【No Hold】|
+| C | holdconsecutive    | 12  | Use Hold on\n12 pieces in a row | 3 | [NH] |
 | C | softdrop           | 10  | Place 10 pieces without\nreleasing Soft Drop | 4 | |
 | C | top3rows           | 3   | Have part of your stack in\nthe top 3 rows for 3 seconds | 4 | |
 | C | linesnoti          | 10  | Clear 10 Lines without\nclearing with T or I-pieces | 4 | |
 | C | szspintriple       | 1   | Clear an S/Z-Spin Triple | 2 | |
-| C | odoubleconsecutive | 2   | Clear 2 Doubles consecutively\nusing two O-Pieces | 4 | ((translation note: disabled in NH now)) |
+| C | odoubleconsecutive | 2   | Clear 2 Doubles consecutively\nusing two O-Pieces | 4 | [NH] |
 | C | tspinminiclear     | 4   | Clear 4 T-Spin Minis | 2 | |
 | C | attack             | 14  | Send 14 Attack | 1 | |
 | C | doublespiece       | 3   | Clear 3 Doubles\nwith the same type of piece | 4 | |
@@ -569,7 +571,7 @@ Tasks that will appear are shown below:
 | B | ljspintriple       | 1   | Clear an L/J-Spin Triple | 2 | |
 | B | quadconsecutive    | 2   | Clear 2 Quads in a row | 2 | |
 | B | singlesonly        | 8   | Clear 8 Singles without doing\nother clears or using Hold | 4 | |
-| B | nogarbage          | 4   | Have no Garbage Lines on\nyour board for 4 seconds | 4 |【Duo+】|
+| B | nogarbage          | 4   | Have no Garbage Lines on\nyour board for 4 seconds | 4 | [r2P] |
 | B | rotate             | 300 | Rotate 300 times | 2 | |
 | B | nocancel           | 8   | Don't cancel any\ngarbage for 8 seconds | 3 | |
 | B | tspindoubleup      | 1   | Clear a T-Spin Double\nwith the Piece pointing up | 4 | |
@@ -611,7 +613,7 @@ When needing to revive calculate revive difficulty score = `floor+accumulated re
 ## Mod+
 
 Every mod has a corresponding buffed mod, needing 30,000 meters climbed with the mod to unlock (activating multiple mods can accumulate for them at the same time)
-【Duo+】is special, see the corresponding chapter
+ [r2P] is special, see the corresponding chapter
 
 All buffed mods can only be played solo, and cannot be stacked on other mods
 
@@ -619,12 +621,12 @@ All buffed mods can only be played solo, and cannot be stacked on other mods
 
 If you want to unlock all buffed mods as quick as possible it's recommended to activate multiple at the same time, below is a reference strategy (if you can smoothly get a few f10 with all of the mods individually)
 
-First round: `【Messier Garbage】【Gravity】【Double Hole Garbage】【All-Spin】` activate these four and rely on All-Spin's fierce output, try not to let garbage lines enter, finish 30,000 meters. If unafraid, you can also bring `【Invisible】` too, otherwise it later needs to be cleared by itself
+First round: ` [MG]  [GV]  [DH]  [AS] ` activate these four and rely on All-Spin's fierce output, try not to let garbage lines enter, finish 30,000 meters. If unafraid, you can also bring ` [IN] ` too, otherwise it later needs to be cleared by itself
     
-Second round: Then individually play `【Expert】【No Hold】【Invisible】`, if capable you can also combine them (despite being harder progress is doubled, you can calculate the efficiency then decide), if only activating one mod then recommend activating `【Volatile】` too, try to tank more garbage and use Quads to downstack to climb much faster (at the same time try to send rather than cancel, more rewards, but even cancelling is doubled so recommend activating Volatile)
-    (altitude/time, multiply by 2 with Expert) to decide whether or not to accumulate for Expert Mode incidentally, if possible then bring it, otherwise later on it needs to be cleared by itself
+Second round: Then individually play ` [EX]  [NH]  [IN] `, if capable you can also combine them (despite being harder progress is doubled, you can calculate the efficiency then decide), if only activating one mod then recommend activating ` [VL] ` too, try to tank more garbage and use Quads to downstack to climb much faster (at the same time try to send rather than cancel, more rewards, but even cancelling is doubled so recommend activating Volatile)
+    (altitude/time, multiply by 2 with EX) to decide whether or not to accumulate for Expert Mode incidentally, if possible then bring it, otherwise later on it needs to be cleared by itself
     
-Additionally if some achievements haven't been played much you can also try them, such as`【Expert】【No Hold】【Double Hole Garbage】`, which allows putting the first round's `【Double Hole Garbage】` into the second round, being more meaningful
+Additionally if some achievements haven't been played much you can also try them, such as` [EX]  [NH]  [DH] `, which allows putting the first round's ` [DH] ` into the second round, being more meaningful
 
 ### Introduction to some effects that will appear later
 
@@ -707,13 +709,13 @@ Starting pattern：
 ..........
 ```
 
-### Gravity (Freefall)
+### rGV Gravity+ (Freefall)
 
 > The ground you stood on never existed in the first place.
 
 - 20G from the start, lock delay table for the ten floors: 24, 22, 20, 18, 16, 15, 14, 13, 12, 11 (unit: frames)
 
-### Volatile Garbage+ (Last Stand)
+### rVL Volatile Garbage+ (Last Stand)
 
 > Strength isn't necessary for those with nothing to lose.
 
@@ -722,7 +724,7 @@ Starting pattern：
 - Garbage hole positions have two warnings
 - `Garbage Favor` is locked to a very high value, and `garbage gathering` is permanently enabled
 
-### Double Hole Garbage+ (Damnation)
+### rDH Double Hole Garbage+ (Damnation)
 
 > Neither the freedom of life or peace of death.
 
@@ -734,7 +736,7 @@ Starting pattern：
 - Board has 4 fixed garbage lines, when cleared spontaneously appears again
 - Activates `garbage line protection` (er... isn't there always 4 lines)
 
-### Invisible+ (The Exile)
+### rIN Invisible+ (The Exile)
 
 > Never underestimate blind faith.
 
@@ -742,7 +744,7 @@ Starting pattern：
 - Only the top three garbage lines are visible  
 - Receive 3 lines of garbage at the start by the system
 
-### All-Spin+ (The Warlock)
+### rAS All-Spin+ (The Warlock)
 
 > Into realms beyond heaven and earth.
 
@@ -752,11 +754,20 @@ Starting pattern：
 - Receive 10 lines of garbage at the start by the system  
 - `Garbage messiness` is increased
 - Activates `Garbage line protection`
-- 【Seriously?】If 800m is reached and digged garbage row count is under 5, sending attack no longer gains experience
+-  [Seriously?] If 800m is reached and digged garbage row count is under 5, sending attack no longer gains experience
 
 ## Special mods
 
-### Duo+ (Bleeding Hearts)
+### SB (Snowball Board)
+
+> Start with a 4X4 board, then roll it larger and larger.
+
+Exclusive to the 2024 Christmas event, free to play for (at least) 23 days starting from December 12 (possibly earlier)
+
+- 4x4 starting board
+- For every 20 lines cleared height and width increases by 1 until reaching 20x20
+
+### r2P (Bleeding Hearts)
 
 > Even as we bleed, we keep holding on...  
 
@@ -793,7 +804,7 @@ Exclusive to 2025 Valentine's Day event, free to play for everyone for a week (i
 > In this mode `garbage messiness` is only decided by Fatigue, original systems are completely ignored  
 > After receiving “disable reviving” buff, revival tasks are locked to the impossible X rank task
 
-### PENTR.IO (The Fool)
+### PN PENTR.IO (The Fool)
 
 > A journey of one thousand six hundred fifty meters starts with a single step.
 
@@ -802,8 +813,8 @@ Exclusive to 2025 Valentine's Day event, free to play for everyone for a week (i
  - Pentominoes  
  - ASC-DX rotation system (same idea as ASC, but range expanded from ±2 to ±3)  
  - Garbo's personally drawn monochromatic sketch background
- - If【Duo】is also enabled, revive tasks will become a “Clear 4*revive difficulty lines”
- - When activating every mod (except for【Duo】), mod combination name is “WHY”
+ - If [Duo] is also enabled, revive tasks will become a “Clear 4*revive difficulty lines”
+ - When activating every mod (except for [Duo] ), mod combination name is “WHY”
 
  ASC-DX's kick table (clockwise and 0←→2's 180°, counterclockwise and 1←→3's 180° is mirror symmetrical):
  ```
@@ -816,35 +827,35 @@ Exclusive to 2025 Valentine's Day event, free to play for everyone for a week (i
  15 14 12 _6 23 32 38
  ```
  
- ### PENTR.IO+ (A Fool's Errand)
+ ### rPN PENTR.IO+ (A Fool's Errand)
  
  > You'll never escape who you are.
  
- 2025 April Fools event similarly to【PENTR.IO】, requires climbing 2500m with【PENTR.IO】to unlock
+ 2025 April Fools event similarly to [PENTR.IO] , requires climbing 2500m with [PENTR.IO] to unlock
  
- -【PENTR.IO】's base but changed to hexominoes
+ - [PENTR.IO] 's base but changed to hexominoes
    
 ## Tarot Card basic summary
 
 | Upright name | Effect summary | Reversed name | Effect summary (includes upright effects) |
-| ---: | :---: | ---: | :---: |
-| The Emperor | less room for error + harder to climb | The Tyrant | extremely hard to climb + descent + super fatigue |
-| Temperance | no holding | Asceticism | 1 preview + random + 2-wide holes |
-| Wheel of Fortune | messier garbage | Loaded Dice | 1.15s line clear delay + pattern start |
-| The Tower | higher gravity + decreased lock delay | Freefall | 20G low lock delay |
-| Strength | double garbage + double cancel | Last Stand | 3x garbage + normal cancel + low board |
-| The Devil | double hole garbage | Damnation | debris garbage lines + checkerboard start |
-| The Hermit | invisible + 5 second flash | The Exile | no more flashing + can't see all garbage |
-| The Magician | no mini + penalize repeats | The Warlock | sudden death + non-spins count as Single + cheese start |
-| The Lovers | two players | Bleeding Hearts | (Event) prioritized Backfire toward partner |
+| ---------------: | :------------------------------------ | --------------: | :------------------------------------------------------ |
+|      The Emperor | less room for error + harder to climb |      The Tyrant | extremely hard to climb + descent + super fatigue       |
+|       Temperance | no holding                            |      Asceticism | 1 preview + random + 2-wide holes                       |
+| Wheel of Fortune | messier garbage                       |     Loaded Dice | 1.15s line clear delay + pattern start                  |
+|        The Tower | higher gravity + decreased lock delay |        Freefall | 20G low lock delay                                      |
+|         Strength | double garbage + double cancel        |      Last Stand | 3x garbage + normal cancel + low board                  |
+|        The Devil | double hole garbage                   |       Damnation | debris garbage lines + checkerboard start               |
+|       The Hermit | invisible + 5 second flash            |       The Exile | no more flashing + can't see all garbage                |
+|     The Magician | no mini + penalize repeats            |     The Warlock | sudden death + non-spins count as Single + cheese start |
+|       The Lovers | two players                           | Bleeding Hearts | (Event) prioritized Backfire toward partner             |
 
 ## Extra notes
 
-In all Fatigue systems `+X% received attack` will be correspondingly increased to 2 (3) times due to【Volatile Garbage(+)】, same as multiplication
+In all Fatigue systems `+X% received attack` will be correspondingly increased to 2 (3) times due to [Volatile Garbage(+)] , same as multiplication
 
 If you can understand JavaScript code: [Extra technological information](/Extra_technological_information.js)
  
-【Advertisement】After experiencing, feel like these mods are too hard? Don't want to grind reverse mod unlocks due to being too inconvenient?  
+ [Advertisement] After experiencing, feel like these mods are too hard? Don't want to grind reverse mod unlocks due to being too inconvenient?  
  If you already have a basic understanding of every mod, then check out this new game! Grandly introduce……  
  [***天穹点点乐 Zenith Clicker***](https://github.com/MrZ626/ZenithClicker)  
  ((translation note: This is present in the original document))
