@@ -300,7 +300,7 @@ When attacked the amount is adjusted based off various factors, before lastly ap
 
 Calculate `critical altitude` = `max(min(attacker's altitude,3500), min(altitude-1000,2000))`
 
-If altitude is greater than `critical altitude`, multiply received attack by `100% + 0.4% *(altitude - critical altitude)^2) / (altitude + critical altitude)`
+If altitude is greater than `critical altitude`, multiply received attack by `100% + 0.4% * (altitude - critical altitude)^2 / (altitude + critical altitude)`
 
 #### 2. Partner penalty
 
