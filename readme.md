@@ -76,11 +76,11 @@ Every frame a rank-skip procedure check is done once:
     Next frame - Due to no experience removal from skipping last frame, a large amount of remaining experience causes another promotion + rank-skip  
     Next next frame - Similarly...
 
-> Below is an image made through simulation of the procedure, showing the rank difference situation for gaining a large amount of experience by breaking B2B on different ranks.  
+> The following is an image made through simulation of the procedure, showing the rank difference situation for gaining a large amount of experience by breaking B2B on different ranks.  
 > Excluding the top 20px for row headers, the dimensions of the statistical part is 1000x600, with the top-left corner being the origin  
 > Every 1px along the horizontal axis corresponds to 0.01 ranks (1.0 to 10.99), every 3px along the vertical axis corresponds to 1 point of experience (1 to 200)  
-> Outputting values as ranks, the first row can be used as a reference for colors, with lighter colors meaning closer to the next rank (e.g., 2.0 red, 2.9 pale red)  
-
+> Outputting values as ranks, the first row can be used as a reference for colors, with lighter colors meaning closer to the next rank (e.g., 2.0 red, 2.9 pale red)
+> 
 ![Rank skip graph](/rank_skip.png)
 
 ### Experience loss
@@ -142,6 +142,9 @@ You can view which Climb Speed you're at under the board, a simple text descript
 |  9  | 2.25 | cyan         | two pairs of parallelograms | Hyperspeed trigger at f3/f4 |
 | 10  | 2.50 | light purple | three pairs of parallelograms | Hyperspeed trigger at f5 |
 | 11  | 2.75 | white        | pair of white triangles added | |
+
+> Diagram of Climb Speed levels made by KonSola5. ((Note that this is not present in the original io_qp2_rule))
+> ![Diagram of Climb Speed levels by KonSola5](/climb_speed_ranks.png)
 
 ### HYPERSPEED
 
