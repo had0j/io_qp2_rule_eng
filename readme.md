@@ -777,7 +777,6 @@ Exclusive to 2025 Valentine's Day event, free to play for everyone for a week (i
 - When one of the players dies the altitude will be temporary locked, until being revived  
 - Climb Speed rank is locked to a highest of 4 (normally unlimited)  
 - Special fatigue process
-- ((translation note: apparently Climb Speed rank is capped at 5 (blue) as well, not sure if this is correct though))
 
 |  Time  | Effect | Description |
 | ----- | --- | --- |
