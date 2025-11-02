@@ -73,7 +73,7 @@ function Loop() {
     if (this.S.zenith.last_rank_change_was_promote && this.S.zenith.climb_pts >= 2 * (rank - 1))
         this.S.zenith.promotion_fatigue = 0;
 
-    // Rank skipping! If there is a large amount of experience after promotion
+    // Calculate decimal ranks...or rank skipping! If the amount of experience gained in a frame is enough to fill the next rank then skip a rank
     this.S.stats.zenith.rank = rank + this.S.zenith.climb_pts / (4 * rank);
 
     // Some statistics
@@ -268,6 +268,45 @@ function getHolePosition() { // Calculate things related to garbage hole positio
             return pos;
         }
     }
+}
+
+// Multi-segment attacks (organized)
+function ExplodeAttack(atkObj) {
+    t.garbageid--;
+    
+    let total = 16 + Math.max(Math.floor((t.stats.zenith.altitude - 3500) / 500), 0)
+    if (MOD_volatile) total *= 2
+    
+    const secBase = Math.floor(total / 4)
+    const remain = total - 4 * secBase
+    const sections = [secBase, secBase, secBase, secBase]
+    for (let i = 0; i < remain; i++) sections[3 - i]++;
+    // The effect of the four lines above is to try to split the total evenly into four sections with the remainder at the back, e.g. 18 becomes [4, 4, 5, 5]
+    // Additionally here's a simpler way:
+    // const sections = []
+    // for (let i = 0; i < 4; i++)
+    //     sections[i] = Math.floor(total / 4) + (total % 4 >= 4 - i);
+    
+    let atk = atkObj.amt;
+    const atkQueue = [];
+    let id = 0;
+    for (; atk > 0 && atkQueue.length < sections.length;) {
+        const cut = Math.min(sections[id++], atk);
+        atk -= cut
+        atkQueue.push({
+            ...atkObj,
+            amt: cut,
+            id: ++t.garbageid
+        })
+    }
+    const countdown = 120 + 30 * atkQueue.length;
+    t.windupwaituntil > e.esm.frame ? (e.wfm.WaitFrames(t.windupwaituntil - e.esm.frame, "start-explode-attack", atkQueue), t.windupwaituntil += countdown) : (StartExplodeAttack(atkQueue), t.windupwaituntil = e.esm.frame + countdown)
+}
+function StartExplodeAttack(t) {
+    for (let n = 0; n < t.length; n++) e.wfm.WaitFrames(60 + 30 * n, "process-exploded-attack", t[n]);
+    e.c.OnClient((() => {
+        e.sfx.Play(`garbagewindup_${Math.max(1,Math.min(4,t.length))}`), e.hm.H.board.el("garbagewindupicon").create(Math.max(1, Math.min(4, t.length)))
+    }))
 }
 
 // Some events
