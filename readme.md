@@ -6,7 +6,7 @@ The` [XX] `in this document is the format for mods. For specifics see the Mods c
 Due to how I originally approached translating the original documentation, for most of the document not only is the original wording preserved, but also the grammatical structure, which may make it feel unnatural or harder to read. ~~This weekend~~ ..hopefully one day I'll try to rewrite a new version that retains most of the layout and information of the original documentation but with different wording to account for differences between the two languages, like with the [unofficial Red Bull Tetris document](https://github.com/had0j/red-bull-tetris-doc-eng). Thanks for understanding.
 
 If there are illegible parts or this version is outdated, please refer to the original document with machine translation.
-Currently synchronized with [ee45cdf](https://github.com/MrZ626/io_qp2_rule/commit/ee45cdfbcaacb7771eb084e70f29881d296cea49).
+Currently synchronized with [b6f02ff](https://github.com/MrZ626/io_qp2_rule/commit/ee45cdfbcaacb7771eb084e70f29881d296cea49).
 
 ## Start
 
@@ -125,6 +125,10 @@ Below are some calculated statistics for convenience:
 
 > Note: Based on this formula it can be calculated that while completely idle, when at Climb Speed rank R's maximum experience amount, it can naturally climb `20R/(R+1)` meters (approaches limit of 20), whereas in EX it is `12R/(R+1)` (approaches limit of 12)
 
+> Note 2: If starting from a very high rank, you can drop to a negative rank by losing lots of ranks every frame through experience loss and rank skipping! Under an empty experience meter, starting from rank 6547 or above results in stopping at a negative rank with 0 experience; when this happens, if you do any experience-gaining actions, then the rank loss every frame will be continued and accelerated...
+
+> Note 3: If you start from certain ranks, there's even a chance of getting NaN rank
+
 ### Appearance
 
 You can view which Climb Speed you're at under the board, a simple text description of the appearances are shown below:
@@ -173,7 +177,7 @@ Other factors that could increase the chance of being chosen as another player's
 
 ### Temporary decrease if in danger
 
-Only in `Easy mode`, check once every 0.25 seconds, if in danger (conditions not understood, probably when your board flashes red, shouldn't be off by a lot) `Targeting Factor` temporarily decreases by 1.5, after leaving danger the 1.5 is added back
+(Not available under `hard mode`: check once every 0.25 seconds, if in danger (conditions not understood, probably when your board flashes red, shouldn't be off by a lot) `Targeting Factor` temporarily decreases by 1.5, after leaving danger the 1.5 is added back
 
 ### Shift to Targeting Grace (No impact on messiness)
 
@@ -202,7 +206,7 @@ When time hits 3/5/7 minutes, `Targeting Factor` +1
 
 Clearing 1, 2, 3 lines respectively send 0, 1, 2 attack
 
-Limited to `Easy mode`: “0 combo single 一 +1 attack”, making clearing 1 line also have 1 attack efficiency, can be considered under specific circumstances
+(Not available under `hard mode`): “0 combo single 一 +1 attack”, making clearing 1 line also have 1 attack efficiency, can be considered under specific circumstances
 
 Clearing 4 lines sends 4 attack, falls under `special clears` (increases B2B count, used in `Surge Attack`, see next chapter for details)
 
@@ -223,14 +227,25 @@ When B2B is broken a large attack is created, attack is `B2B count -3`, (or the 
 
 ### Windup Attack
 
-If a single attack with 8 or more lines is received, this attack will be split into multiple parts and have a warning hint before being received, to prevent easily topping out after targeting multiplier is increased due to various reasons
+If a single attack with 8 or more lines is received, this attack will be processed and split into multiple parts, and have a warning hint before being received to prevent easily topping out after targeting multiplier is increased due to various reasons
 
-Splitting rule: ~~Split the attack into several groups of 4 and the remainder portion, at maximum 4 groups (all extra attack are put in the last segment), for example 14 attack will be split into 4+4+4+2~~
-((Temporary paraphrasing, will update to format of io_qp2_rule soon)): After 4000m, every 500m adds one to the maximum amount of garbage from a windup (e.g., at 5100m the maximum becomes 19 or 38). The maximum number is then split evenly into four segments of target amounts, with the last segments containing the remainder when not perfectly divisible (e.g., maximum of 19 splits into targets of [4, 5, 5, 5]). The actual amount of garbage then attempts to fill these target amounts until running out or reaching the maximum, so for example, receiving 15 with a maximum of 19 causes it to split into [4, 5, 5, 1]
+Splitting rule: ~~Split the attack into several groups of 4 and the remainder portion, at maximum 4 groups (all extra attack are put in the last segment), for example 14 attack will be split into 4+4+4+2~~ ((Paraphrased, not in the format of io_qp2_rule)) After 4000m, every 500m adds one to the maximum amount of garbage from a windup (e.g., at 5100m the maximum becomes 19 or 38). The maximum number is then split evenly into four segments of target amounts, with the last segments containing the remainder when not perfectly divisible (e.g., maximum of 19 splits into targets of [4, 5, 5, 5]). The actual amount of garbage then attempts to fill these target amounts until running out or reaching the maximum, so for example, receiving 15 with a maximum of 19 causes it to split into [4, 5, 5, 1]
+
+((io_qp2_rule format)): 
+Specific splitting method:
+- Set `imagined attack` = 16
+- Starting from 4000m, for every multiple of 500m, add 1 to `imagined attack`  
+- If [(r)VL] is enabled, multiply `imagined attack` by 2
+- Try to split `imagined attack` into four portions with larger numbers at the back, e.g. split 18 into [4, 4, 5, 5]
+- Fill `actual attack` based on the portions of `imaginary attack`, stopping when the last portion overflows or there's not enough to fill the rest anymore. The result becomes the final multi-segment amounts received
+    - Example 1: filling 11 into [4, 4, 5, 5] outputs [4, 4, 3]
+    - Example 2: filling 21 into [4, 4, 5, 5] outputs [4, 4, 5, 5]
 
 Warning method: When receiving this type of attack start playing warning animations and sound effects  
 The amount of sound effects corresponds to the amount of groups the current round's attack split into (for example 3 sounds corresponds to 4+4+n)  
 1 second later the attacks start entering the garbage queue, each split is separated by 0.5s
+
+> In the source code, there is a windup_until timer that gets set to `2+0.5*segments` seconds after receiving multi-segment attacks, so after the last segment is finished there is still a second in the `receiving windup` timeframe
 
 If [VL] is activated, values above related to attack are all multiplied (seems like so, individual circumstances will ±1) ((translation note: I have no idea what the text inside the parentheses mean, sorry if it's unclear.))
 
@@ -275,8 +290,8 @@ Will also increase received garbage amount, see `received amount calculation` ch
 
 ### Targeting Grace
 
-There is a `Targeting Grace` variable, when attacked increase the same amount of value as received garbage in queue (value through various penalty/protection adjustments, not the original attack amount, excluding [rVL]'s 3x isn't counted), until capping at **18**  
-`Targeting Grace`'s value decreases `garbage messiness`, although this system is blocked by these reasons: when time reaches 6 minutes in [rEX] , [(r)MG]  
+There is a `Targeting Grace` variable, when attacked increase the same amount of value as the amount of received garbage in queue (not the original amount, but rather the amount after various penalties/protection changes, only in [rVL] it is divided by three and rounded down), until capping at **18**  
+`Targeting Grace`'s value decreases `garbage messiness`, although this system is blocked by these reasons: when time reaches 6 minutes in [rEX] , [(r)MS]  
 If `Targeting Grace`>0, then it will decrease by 1 a bit of time after “last moment of being attacked”, and refresh “last moment of being attacked” as the current moment, release gaps are shown below:
 
 | Floor | Release every (seconds) | During [rEX] |
@@ -348,7 +363,7 @@ The `garbage messiness` in this page is exactly this X, which can be affected by
 | Element | Impact value |
 | :-: | :-: |
 | Floor | `Floor*3%`, in [(r)EX] `Floor*5%` |
-| [(r)MG)] | +25% (100%) |
+| [(r)MS)] | +25% (100%) |
 | [rAS] | +30% |
 | [rEX] 's 11 minute Fatigue `full scatter` effect | =100% (calculations above can surpass 100%, this effect overwrites) |
 | `Targeting Grace` (calculated when finally spawns) | every point of `Targeting Grace` decreases Y by 3.75%, X by 1.5% |
@@ -365,10 +380,10 @@ When this value is 0 (TL etc. modes' normal condition), garbage hole positions a
 In qp2, this value's default formula is `33-floor*3`, the further the harder
 
 When activating [(r)EX] , this value -33, which means evenly random at the start  
-When activating [(r)MG] , this value -25  
+When activating [(r)MS] , this value -25  
 When activating [rVL] , this value is locked to 50 for the entire run
 
-> The worst condition is Floor 10 [EX]  [MG] 's -55   
+> The worst condition is Floor 10 [EX]  [MS] 's -55   
 > The easiest is [rVL] 's 50
 
 Specific garbage hole position choosing process:
@@ -383,7 +398,7 @@ Specific garbage hole position choosing process:
 1. Decide a column as the garbage hole position via the weight calculation of the previous step
 
 > In an old version, the use of the value was inverted, being the higher the harder
-> After fixing, all categories with [EX] and* [MG] will become harder to an extent, although after fixing, old records weren't deleted ((*translation note: should be or))
+> After fixing, all categories with [EX] and* [MS] will become harder to an extent, although after fixing, old records weren't deleted ((*translation note: should be or))
 
 ## Garbage gathering
  
@@ -396,7 +411,7 @@ When enabled, garbage hole positions will never be on the two leftmost or rightm
 When attacked garbage lines will wait in queue for a certain amount of time before entering a triggerable state, during this state placing pieces that don't clear lines causes garbage to enter through the board: translucent yellow → translucent red → opaque red (triggerable)  
 Waiting time is decided by the floor or certain mods, for specific values see below:
 
-| Floor |  Regular (Non-EX)   |  [(r)EX]   | [rMG/rVL/rDH] | Other [Mod+] |
+| Floor |  Regular (Non-EX)   |  [(r)EX]   | [rMS/rVL/rDH] | Other [Mod+] |
 | :-: | :----------: | :---------: | :-------------: | :-----: |
 |  1  |  5.0s (300f)  | 2.2s (132f) |   **2.5s**    |**2.5s**|
 |  2  |  4.5s (270f)  | 2.0s (120f) |   **2.5s**    |**2.5s**|
@@ -431,7 +446,7 @@ To prevent a game from being too long, starting from 8 minutes every minute adds
 
 ## Mods
 
-In this page `Easy mode` means not activating [(r)EX] and not activating [Mod+] 
+In this page `hard mode` refers to activating [(r)EX] or any [Mod+] 
 
 Mods are ways you can increase the difficulty before starting a run, with basically only downsides and no upsides, but activating mods (or specific mod combinations) and reaching certain altitudes can grant achievements
 
@@ -453,7 +468,7 @@ There are a total of 9 mods, each corresponding with a special effect that can b
 
 - Disables holding
 
-### MG Messier Garbage (Wheel of Fortune)
+### MS Messier Garbage (Wheel of Fortune)
 
 > The only constant in life is change.
 
@@ -480,7 +495,7 @@ There are a total of 9 mods, each corresponding with a special effect that can b
 
 > Redefine your limits or succumb to his chains.
 
-- Every line of garbage has a chance to have two holes
+- Every line of garbage has a 50% chance to gain an additional hole at a random column.
 
 ### IN Invisible (The Hermit)
 
@@ -624,7 +639,7 @@ All buffed mods can only be played solo, and cannot be stacked on other mods
 
 If you want to unlock all buffed mods as quick as possible it's recommended to activate multiple at the same time, below is a reference strategy (if you can smoothly get a few f10 with all of the mods individually)
 
-First round: ` [MG]  [GV]  [DH]  [AS] ` activate these four and rely on All-Spin's fierce output, try not to let garbage lines enter, finish 30,000 meters. If unafraid, you can also bring ` [IN] ` too, otherwise it later needs to be cleared by itself
+First round: ` [MS]  [GV]  [DH]  [AS] ` activate these four and rely on All-Spin's fierce output, try not to let garbage lines enter, finish 30,000 meters. If unafraid, you can also bring ` [IN] ` too, otherwise it later needs to be cleared by itself
     
 Second round: Then individually play ` [EX]  [NH]  [IN] `, if capable you can also combine them (despite being harder progress is doubled, you can calculate the efficiency then decide), if only activating one mod then recommend activating ` [VL] ` too, try to tank more garbage and use Quads to downstack to climb much faster (at the same time try to send rather than cancel, more rewards, but even cancelling is doubled so recommend activating Volatile)
     (altitude/time, multiply by 2 with EX) to decide whether or not to accumulate for Expert Mode incidentally, if possible then bring it, otherwise later on it needs to be cleared by itself
@@ -752,7 +767,7 @@ Starting pattern：
 > Into realms beyond heaven and earth.
 
 - Even more strict consecutive same clear penalty: only track Spin's lines cleared count (including 0) or Void actions, as long as two consecutive attacks are the same then 20 penalty lines are added leading to instant death  
-- After reaching B2B x 4, any Spin (including ones that don't clear lines) +2 attack, and B2B counter can be increased without clearing lines  
+- After reaching B2B x4, the attack bonus from B2B becomes +2, and non-line Spins are also treated as Spin clears, sending B2B's 2 attack and increasing the B2B counter.
 - All non-Spin clears are called “Void”, no attack ((translation note: Void acts as a Single but doesn't penalize if a Spin Single is done previously))
 - Receive 10 lines of garbage at the start by the system  
 - `Garbage messiness` is increased
