@@ -253,6 +253,32 @@ If [VL] is activated, values above related to attack are all multiplied (seems l
 
 ### Cancel streak
 
+((the following is a paraphrased version that doesn't follow the format of io_qp2_rule but may be more grammatically natural to read:))   
+
+For every garbage line cancelled: +1  
+Every time an S/Z Spin is cleared, check the last six S/Z Spins; if at least five are S or five are Z: +2  
+Placing an I piece vertically without clearing lines on either of the two leftmost or rightmost columns of the board with the neighbouring four blocks of the other side column all being cyan: +3  
+All Clear: +3  
+For every 30 seconds without decreasing cancelstreak: +5  
+For every 75 pieces without decreasing cancelstreak: +5  
+Clearing any I-Spin: -2  
+Clearing an L/J/S/Z Spin on a different rotation center column from both of the previous two Spins of the same piece: -2  
+For every garbage line accepted: -3  
+Clearing a Quad: -3  
+Clearing a Quad on a different column from both of the previous two Quads: -7  
+Clearing any garbage line: reset to 0  
+
+20–29: Every bag has an extra O at its end  
+≥25: Garbage phase time is halved  
+30–39: Every bag has an extra O, and an extra L/J at its end  
+≥40 (for the first time): An I5 pentomino is added into queue (clearing five lines with it still counts as Quad)  
+40–49: Every bag has an extra O, and an extra L/J, and an extra S/Z at its end  
+50–59: Every bag has an extra O, and an extra L/J, and an extra S/Z, and an extra L/J, and an extra T/I at its end  
+≥60: Every bag has an extra O, and an extra L/J, and an extra S/Z, and an extra L/J, and an extra T/I, and an extra S/Z at its end  
+> `cancelstreak` cannot go negative, thresholds except for I5 are doubled with Volatile Garbage enabled, and extra pieces are randomized separately from the main bag  
+
+((io_qp2_rule format:))  
+
 <details>
 <summary> The developer doesn't wish for the contents of this chapter to be widely spread, please read cautiously, only players that are highly reliant on loops need to understand </summary>
 
